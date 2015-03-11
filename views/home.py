@@ -1,9 +1,9 @@
-from flask_stache import render_view
+from views.template import Template
 
 
-class Home(object):
+class Home(Template):
+    def title(self):
+        return "Hello Template"
+
     def message(self):
-        return "Mustache"
-
-    def render(self):
-        return render_view(self)
+        return "Template"
