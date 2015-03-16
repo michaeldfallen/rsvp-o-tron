@@ -1,5 +1,5 @@
 from flask import Flask
-from views.home import Home
+import views
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
@@ -7,4 +7,9 @@ app.config.from_pyfile('config.py')
 
 @app.route('/')
 def hello():
-    return Home.render()
+    return views.Home.render()
+
+
+@app.route('/list-invites')
+def listInvites():
+    return views.ListInvites.render()
