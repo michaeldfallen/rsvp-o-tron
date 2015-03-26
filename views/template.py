@@ -22,8 +22,7 @@ class Template(object):
             self.title = sub_template.title
             self.content = render_view(sub_template)
 
-    @classmethod
-    def render(sub_template_clazz):
+    def render(self):
         return render_view(
-            Template(sub_template_clazz())
+            Template(self)
         )

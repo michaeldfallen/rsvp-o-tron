@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, redirect, url_for
 from flask.ext.script import Manager
 import db
 import views
@@ -16,10 +16,21 @@ def hello():
 
 
 @app.route('/list-invites')
-def listInvites():
+def list_invites():
     all_invites = Invite.all()
     return views.ListInvites(all_invites).render()
 
+
+@app.route('/invite/new')
+def create_invite_form():
+    return views.CreateInvite().render()
+
+
+@app.route('/invite/new', methods=['POST'])
+def create_invite():
+    invite = Invite()
+    Invite.save(invite)
+    return redirect(url_for('list_invites'))
 
 if __name__ == '__main__':
     manager.run()
