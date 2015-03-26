@@ -15,7 +15,7 @@ def hello():
     return views.Home.render()
 
 
-@app.route('/list-invites')
+@app.route('/invite')
 def list_invites():
     all_invites = Invite.all()
     return views.ListInvites(all_invites).render()
@@ -30,6 +30,13 @@ def create_invite_form():
 def create_invite():
     invite = Invite()
     Invite.save(invite)
+    return redirect(url_for('list_invites'))
+
+
+@app.route('/invite/<token>/delete', methods=['POST'])
+@app.route('/invite/<token>', methods=['DELETE'])
+def delete_invite(token):
+    Invite.delete(token)
     return redirect(url_for('list_invites'))
 
 if __name__ == '__main__':

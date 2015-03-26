@@ -26,3 +26,9 @@ class Invite(db.Model):
     def save(self):
         db.session.add(self)
         db.session.commit()
+
+    @staticmethod
+    def delete(token):
+        invite = Invite.query.filter_by(token=token).first()
+        db.session.delete(invite)
+        db.session.commit()
