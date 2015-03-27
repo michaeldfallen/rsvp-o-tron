@@ -1,0 +1,15 @@
+<h1>Add a Guest</h1>
+
+<form action="/invite/{{token}}/guest" method="post" accept-charset="utf-8">
+  <label for="first_name">
+    First Name
+    <input type="text" name="first_name" id="first_name" value="" />
+  </label>
+
+  <label for="last_name">
+    Last Name
+    <input type="text" name="last_name" id="last_name" value="" />
+  </label>
+
+  <input type="submit" value="Continue →">
+</form>

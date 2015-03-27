@@ -39,5 +39,16 @@ def delete_invite(token):
     Invite.delete(token)
     return redirect(url_for('list_invites'))
 
+
+@app.route('/invite/<token>/guest', methods=['POST'])
+def add_guest(token):
+    return redirect(url_for('list_invites'))
+
+
+@app.route('/invite/<token>/guest/new', methods=['GET'])
+def add_guest_form(token):
+    return views.AddGuest(token).render()
+
+
 if __name__ == '__main__':
     manager.run()
