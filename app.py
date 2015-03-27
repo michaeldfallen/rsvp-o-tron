@@ -2,17 +2,19 @@ from flask import Flask, redirect, url_for
 from flask.ext.script import Manager
 import db
 import views
+import add_guest
 from model import Invite
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
 manager = Manager(app)
 db.init(app, manager)
+add_guest.routes(app)
 
 
 @app.route('/')
 def hello():
-    return views.Home.render()
+    return views.Home().render()
 
 
 @app.route('/invite')
@@ -38,16 +40,6 @@ def create_invite():
 def delete_invite(token):
     Invite.delete(token)
     return redirect(url_for('list_invites'))
-
-
-@app.route('/invite/<token>/guest', methods=['POST'])
-def add_guest(token):
-    return redirect(url_for('list_invites'))
-
-
-@app.route('/invite/<token>/guest/new', methods=['GET'])
-def add_guest_form(token):
-    return views.AddGuest(token).render()
 
 
 if __name__ == '__main__':
