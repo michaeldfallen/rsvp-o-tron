@@ -5,8 +5,8 @@ class Guest(db.Model):
     __tablename__ = 'guest'
 
     id = db.Column(db.Integer, primary_key=True)
-    firstname = db.Column(db.String())
-    lastname = db.Column(db.String())
+    first_name = db.Column(db.String())
+    last_name = db.Column(db.String())
     invite_id = db.Column(db.Integer, db.ForeignKey('invite.id'))
 
     invite = db.relationship(
@@ -16,18 +16,18 @@ class Guest(db.Model):
 
     def __init__(
             self,
-            firstname,
-            lastname,
+            first_name,
+            last_name,
             invite_id):
-        self.firstname = firstname
-        self.lastname = lastname
+        self.first_name = first_name
+        self.last_name = last_name
         self.invite_id = invite_id
 
     def __repr__(self):
         return '<Guest(id {}, name {}{}, invite {})>'.format(
             self.id,
-            self.firstname,
-            self.lastname,
+            self.first_name,
+            self.last_name,
             self.invite_id
         )
 
