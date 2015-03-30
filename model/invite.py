@@ -7,7 +7,10 @@ class Invite(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     token = db.Column(db.String())
-    # guests = db.relationship('Guest', order_by="Guest.id", backref="invite")
+    guests = db.relationship(
+        'Guest',
+        order_by='Guest.id',
+        backref='invite_guests')
 
     def __new_uuid():
         return uuid.uuid4().hex[:6]

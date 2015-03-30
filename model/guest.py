@@ -9,10 +9,7 @@ class Guest(db.Model):
     last_name = db.Column(db.String())
     invite_id = db.Column(db.Integer, db.ForeignKey('invite.id'))
 
-    invite = db.relationship(
-        'Invite',
-        backref=db.backref('guests', order_by=id)
-    )
+    invite = db.relationship('Invite')
 
     def __init__(
             self,

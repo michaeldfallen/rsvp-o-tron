@@ -16,7 +16,7 @@
       <table border="0">
         <tr><th>Name</th></tr>
         {{#guests}}
-        <tr><td>{{firstname}} {{lastname}}</td></tr>
+        <tr><td>{{first_name}} {{last_name}}</td></tr>
         {{/guests}}
       </table>
       <form method="GET" action="/invite/{{token}}/guest/new">
