@@ -14,9 +14,16 @@
     <td>{{token}}</td>
     <td>
       <table border="0">
-        <tr><th>Name</th></tr>
+        <tr><th>Name</th><th>Actions</th></tr>
         {{#guests}}
-        <tr><td>{{first_name}} {{last_name}}</td></tr>
+        <tr>
+          <td>{{first_name}} {{last_name}}</td>
+          <td>
+            <form method="POST" action="/invite/{{token}}/guest/{{id}}/delete">
+              <input type="submit" value="Delete" />
+            </form>
+          </td>
+        </tr>
         {{/guests}}
       </table>
       <form method="GET" action="/invite/{{token}}/guest/new">

@@ -31,3 +31,9 @@ class Guest(db.Model):
     def save(self):
         db.session.add(self)
         db.session.commit()
+
+    @staticmethod
+    def delete(id_):
+        guest = Guest.query.filter_by(id=id_).first()
+        db.session.delete(guest)
+        db.session.commit()
