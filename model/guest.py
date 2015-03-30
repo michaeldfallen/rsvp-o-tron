@@ -5,25 +5,35 @@ class Guest(db.Model):
     __tablename__ = 'guest'
 
     id = db.Column(db.Integer, primary_key=True)
-    firstname = db.Column(db.String())
-    lastname = db.Column(db.String())
-#    invite_id = db.Column(db.Integer, db.ForeignKey('invite.id'))
-#
-#    invite = db.relationship(
-#        'Invite',
-#        backref=db.backref('guests', order_by=id)
-#    )
+    first_name = db.Column(db.String())
+    last_name = db.Column(db.String())
+    invite_id = db.Column(db.Integer, db.ForeignKey('invite.id'))
+
+    invite = db.relationship('Invite')
 
     def __init__(
             self,
-            firstname,
-            lastname):
-        self.firstname = firstname
-        self.lastname = lastname
+            first_name,
+            last_name,
+            invite_id):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.invite_id = invite_id
 
     def __repr__(self):
-        return '<Guest(id {}, name {}{})>'.format(
+        return '<Guest(id {}, name {}{}, invite {})>'.format(
             self.id,
-            self.firstname,
-            self.lastname
+            self.first_name,
+            self.last_name,
+            self.invite_id
         )
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @staticmethod
+    def delete(id_):
+        guest = Guest.query.filter_by(id=id_).first()
+        db.session.delete(guest)
+        db.session.commit()

@@ -4,3 +4,4 @@ flask-stache
 psycopg2
 Flask-SQLAlchemy
 Flask-Migrate
+Flask-WTF

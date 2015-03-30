@@ -12,7 +12,24 @@
   {{#invites}}
   <tr>
     <td>{{token}}</td>
-    <td>{{guests}}</td>
+    <td>
+      <table border="0">
+        <tr><th>Name</th><th>Actions</th></tr>
+        {{#guests}}
+        <tr>
+          <td>{{first_name}} {{last_name}}</td>
+          <td>
+            <form method="POST" action="/invite/{{token}}/guest/{{id}}/delete">
+              <input type="submit" value="Delete" />
+            </form>
+          </td>
+        </tr>
+        {{/guests}}
+      </table>
+      <form method="GET" action="/invite/{{token}}/guest/new">
+        <input type="submit" value="Add Guest" />
+      </form>
+    </td>
     <td>
       <form method="POST" action="/invite/{{token}}/delete">
         <input type="submit" value="Delete" />

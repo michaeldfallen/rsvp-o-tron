@@ -1,0 +1,23 @@
+<h1>Add a Guest</h1>
+
+<form action="/invite/{{token}}/guest" method="post" accept-charset="utf-8">
+  <label for="first_name">
+    First Name
+    <input type="text" name="first_name" id="first_name" value="" />
+    {{#form.errors.first_name}}
+    <span class="error">{{.}}</span>
+    {{/form.errors.first_name}}
+  </label>
+
+  <label for="last_name">
+    Last Name
+    <input type="text" name="last_name" id="last_name" value="" />
+    {{#form.errors.last_name}}
+    <span class="error">{{.}}</span>
+    {{/form.errors.last_name}}
+  </label>
+
+  {{{ form.csrf_token }}}
+
+  <input type="submit" value="Continue →">
+</form>
