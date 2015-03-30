@@ -12,10 +12,7 @@ class Invite(object):
 class ListInvites(Template):
 
     def __init__(self, invites=[]):
-        self._invites = invites
+        self.invites = invites
 
     def title(self):
         return "All Invites"
-
-    def invites(self):
-        return self._invites

@@ -17,13 +17,20 @@ class Guest(db.Model):
     def __init__(
             self,
             firstname,
-            lastname):
+            lastname,
+            invite_id):
         self.firstname = firstname
         self.lastname = lastname
+        self.invite_id = invite_id
 
     def __repr__(self):
-        return '<Guest(id {}, name {}{})>'.format(
+        return '<Guest(id {}, name {}{}, invite {})>'.format(
             self.id,
             self.firstname,
-            self.lastname
+            self.lastname,
+            self.invite_id
         )
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()

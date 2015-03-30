@@ -2,6 +2,7 @@ from views.template import Template
 from flask_wtf import Form
 from wtforms import TextField, validators
 from flask import redirect, url_for
+from model import Guest, Invite
 
 
 class AddGuestForm(Form):
@@ -24,6 +25,13 @@ def routes(app):
     def add_guest_to_invite(token):
         form = AddGuestForm()
         if form.validate_on_submit():
+            invite = Invite.get(token)
+            guest = Guest(
+                form.first_name.data,
+                form.last_name.data,
+                invite.id
+            )
+            guest.save()
             return redirect(url_for('list_invites'))
         else:
             return AddGuest(token, form).render()

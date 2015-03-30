@@ -23,12 +23,16 @@ class Invite(db.Model):
     def all():
         return Invite.query.all()
 
+    def get(token):
+        invite = Invite.query.filter_by(token=token).first()
+        return invite
+
     def save(self):
         db.session.add(self)
         db.session.commit()
 
     @staticmethod
     def delete(token):
-        invite = Invite.query.filter_by(token=token).first()
+        invite = Invite.get(token)
         db.session.delete(invite)
         db.session.commit()
