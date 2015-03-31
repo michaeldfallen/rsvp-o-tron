@@ -1,4 +1,4 @@
-from views.template import Template
+from app.views.template import Template
 
 
 class Home(Template):

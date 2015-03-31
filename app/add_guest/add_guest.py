@@ -1,8 +1,8 @@
-from views.template import Template
+from app.views.template import Template
+from app.model import Guest, Invite
 from flask_wtf import Form
 from wtforms import TextField, validators
 from flask import redirect, url_for
-from model import Guest, Invite
 
 
 class AddGuestForm(Form):
