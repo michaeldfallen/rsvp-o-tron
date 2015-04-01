@@ -1,5 +1,6 @@
 from app.views.template import Template
-from app.model import Guest, Invite
+from app.guest.model import Guest
+from app.model import Invite
 from flask_wtf import Form
 from wtforms import TextField, validators
 from flask import redirect, url_for

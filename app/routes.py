@@ -1,5 +1,6 @@
 from flask import redirect, url_for
-from app.model import Invite, Guest
+from app.guest.model import Guest
+from app.model import Invite
 from app import views
 
 
