@@ -1,5 +1,5 @@
 from app.guest.model import Guest
-from app.model import Invite
+from app.invite.model import Invite
 from app.guest.templates import AddGuest
 from app.guest.forms import AddGuestForm
 from flask import redirect, url_for
