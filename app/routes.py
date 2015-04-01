@@ -1,11 +1,9 @@
 from flask import redirect, url_for
 from app.model import Invite, Guest
-from app import views, guest
+from app import views
 
 
 def routes(app):
-    guest.routes(app)
-
     @app.route('/')
     def hello():
         return views.Home().render()

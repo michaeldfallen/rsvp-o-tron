@@ -20,8 +20,8 @@ class AddGuest(Template):
         return "Add a guest"
 
 
-def routes(app):
-    @app.route('/invite/<token>/guest', methods=['POST'])
+def routes(blueprint):
+    @blueprint.route('/invite/<token>/guest', methods=['POST'])
     def add_guest_to_invite(token):
         form = AddGuestForm()
         if form.validate_on_submit():
@@ -36,7 +36,7 @@ def routes(app):
         else:
             return AddGuest(token, form).render()
 
-    @app.route('/invite/<token>/guest/new', methods=['GET'])
+    @blueprint.route('/invite/<token>/guest/new', methods=['GET'])
     def add_guest_form(token):
         form = AddGuestForm()
         return AddGuest(token, form).render()

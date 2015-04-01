@@ -1,5 +1,7 @@
 # flake8: noqa
-from .add_guest import routes as add_guest_routes
+from flask import Blueprint
+from . import add_guest
 
-def routes(app):
-    add_guest_routes(app)
+
+blueprint = Blueprint('guest', __name__)
+add_guest.routes(blueprint)
