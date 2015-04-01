@@ -1,5 +1,4 @@
 from flask import redirect, url_for
-from app.guest.model import Guest
 from app.model import Invite
 from app import views
 
@@ -28,10 +27,4 @@ def routes(app):
     @app.route('/invite/<token>', methods=['DELETE'])
     def delete_invite(token):
         Invite.delete(token)
-        return redirect(url_for('list_invites'))
-
-    @app.route('/invite/<token>/guest/<id>/delete', methods=['POST'])
-    @app.route('/invite/<token>/guest/<id>', methods=['DELETE'])
-    def delete_guest(token, id):
-        Guest.delete(id)
         return redirect(url_for('list_invites'))

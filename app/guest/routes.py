@@ -25,3 +25,9 @@ def register_routes(blueprint):
     def add_guest_form(token):
         form = AddGuestForm()
         return AddGuest(token, form).render()
+
+    @blueprint.route('/invite/<token>/guest/<id>/delete', methods=['POST'])
+    @blueprint.route('/invite/<token>/guest/<id>', methods=['DELETE'])
+    def delete_guest(token, id):
+        Guest.delete(id)
+        return redirect(url_for('list_invites'))
