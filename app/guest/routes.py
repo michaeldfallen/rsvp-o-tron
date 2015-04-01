@@ -1,6 +1,6 @@
 from app.guest.model import Guest
 from app.invite.model import Invite
-from app.guest.templates import AddGuest
+from app.guest import views
 from app.guest.forms import AddGuestForm
 from flask import redirect, url_for
 
@@ -19,12 +19,12 @@ def register_routes(blueprint):
             guest.save()
             return redirect(url_for('list_invites'))
         else:
-            return AddGuest(token, form).render()
+            return views.AddGuest(token, form).render()
 
     @blueprint.route('/invite/<token>/guest/new', methods=['GET'])
     def add_guest_form(token):
         form = AddGuestForm()
-        return AddGuest(token, form).render()
+        return views.AddGuest(token, form).render()
 
     @blueprint.route('/invite/<token>/guest/<id>/delete', methods=['POST'])
     @blueprint.route('/invite/<token>/guest/<id>', methods=['DELETE'])
