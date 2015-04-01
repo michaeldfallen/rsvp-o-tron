@@ -1,12 +1,10 @@
 from app.views.template import Template
 
 
-class Invite(object):
-    def url(self):
-        return "http://foo"
+class CreateInvite(Template):
 
-    def guests(self):
-        return "John Smith"
+    def title(self):
+        return "Create an Invite"
 
 
 class ListInvites(Template):

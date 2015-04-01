@@ -1,13 +1,9 @@
 from flask import redirect, url_for
 from app.model import Invite
-from app import views
+from app.invite import views
 
 
 def register_routes(blueprint):
-    @blueprint.route('/')
-    def hello():
-        return views.Home().render()
-
     @blueprint.route('/invite')
     def list_invites():
         all_invites = Invite.all()
