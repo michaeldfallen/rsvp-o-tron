@@ -6,3 +6,4 @@ Flask-SQLAlchemy
 Flask-Migrate
 Flask-WTF
 pytest
+colour-runner
