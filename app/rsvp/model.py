@@ -6,6 +6,12 @@ class RSVP(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     attending = db.Column(db.Boolean(), nullable=False)
+    guest_id = db.Column(db.Integer, db.ForeignKey('guest.id'))
+
+    guest = db.relationship('Guest')
+
+    def __init__(self, guest_id):
+        pass
 
     def save(self):
         db.session.add(self)

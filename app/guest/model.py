@@ -10,6 +10,7 @@ class Guest(db.Model):
     invite_id = db.Column(db.Integer, db.ForeignKey('invite.id'))
 
     invite = db.relationship('Invite')
+    rsvp = db.relationship('RSVP', uselist=False, backref='guest_rsvp')
 
     def __init__(
             self,
