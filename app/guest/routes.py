@@ -17,7 +17,7 @@ def register_routes(blueprint):
                 invite.id
             )
             guest.save()
-            return redirect(url_for('list_invites'))
+            return redirect(url_for('invite.list_invites'))
         else:
             return views.AddGuest(token, form).render()
 
@@ -30,4 +30,4 @@ def register_routes(blueprint):
     @blueprint.route('/invite/<token>/guest/<id>', methods=['DELETE'])
     def delete_guest(token, id):
         Guest.delete(id)
-        return redirect(url_for('list_invites'))
+        return redirect(url_for('invite.list_invites'))
