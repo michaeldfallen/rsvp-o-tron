@@ -7,3 +7,4 @@ Flask-Migrate
 Flask-WTF
 pytest
 colour-runner
+lxml
