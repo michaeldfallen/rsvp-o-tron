@@ -1,5 +1,5 @@
 import unittest
-from test.dbtestcase import with_context, setUpDB, setUpApp, tearDownDB
+from test.helpers import with_context, setUpDB, setUpApp, tearDownDB
 from app.invite.model import Invite
 
 

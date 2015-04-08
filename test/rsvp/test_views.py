@@ -1,5 +1,5 @@
 import unittest
-from test.viewtestcase import with_context, setUpApp
+from test.helpers import with_context, setUpApp
 from lxml.html import document_fromstring
 from app.rsvp.views import Step1Start
 
