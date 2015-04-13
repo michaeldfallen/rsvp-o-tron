@@ -3,6 +3,10 @@ from app.db import db
 from functools import wraps
 
 
+class TestForm(object):
+    errors = {}
+
+
 def with_context(test):
     @wraps(test)
     def _wrapped_test(self):
