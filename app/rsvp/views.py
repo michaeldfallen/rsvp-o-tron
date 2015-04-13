@@ -1,21 +1,12 @@
 from app.views.template import Template
+from app.forms import FormHandler
 
 
-class Step1Start(Template):
+class Step1Start(Template, FormHandler):
     title = "Hello, Guest!"
 
     def __init__(self, form):
         self.form = form
-
-    def errors(self):
-        err = []
-        for (key, errorList) in self.form.errors.items():
-            for error in errorList:
-                err.append({
-                    "key": key,
-                    "error": error
-                })
-        return err
 
 
 class Step2InviteDetails(Template):
