@@ -1,7 +1,8 @@
+from flask import redirect, url_for, session
 from app.rsvp import views
 from app.rsvp.model import RSVP
 from app.invite.model import Invite
-from app.rsvp.forms import FindInviteForm
+from app.rsvp.forms import FindInviteForm, AttendanceForm
 
 
 def register_routes(blueprint):
@@ -18,4 +19,26 @@ def register_routes(blueprint):
             form.errors["global"] = ["We couldn't find your invitation"]
             return views.Step1Start(form).render()
         else:
-            return views.Step2InviteDetails(form).render()
+            return redirect(url_for('rsvp.invite_details', token=invite.token))
+
+    @blueprint.route('/rsvp/<string:token>/invite-details')
+    def invite_details(token):
+        form = AttendanceForm()
+        invite = Invite.get(token)
+        return views.Step2InviteDetails(invite, form).render()
+
+    @blueprint.route('/rsvp/<string:token>/invite-details', methods=['POST'])
+    def attendance(token):
+        form = AttendanceForm()
+        invite = Invite.get(token)
+        if form.validate_on_submit():
+            rsvp = form.bind()
+            session['rsvp'] = rsvp.to_json()
+            session.modified = True
+            return redirect(url_for('rsvp.confirm', token=token))
+        else:
+            return views.Step2InviteDetails(invite, form).render()
+
+    @blueprint.route('/rsvp/<string:token>/confirm')
+    def confirm(token):
+        return views.ConfirmStep().render()

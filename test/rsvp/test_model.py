@@ -54,3 +54,29 @@ class TestModel(unittest.TestCase):
             savedrsvp.guest,
             rsvp.guest
         )
+
+    @with_context
+    def test_rsvp_to_from_json(self):
+        guest = self.make_guest()
+
+        rsvp = RSVP(guest.id)
+        json = rsvp.to_json()
+        recovered = RSVP.from_json(json)
+
+        self.assertEqual(rsvp, recovered)
+
+        rsvp = RSVP(guest.id)
+        rsvp.attending = True
+        rsvp.save()
+        json = rsvp.to_json()
+        recovered = RSVP.from_json(json)
+
+        self.assertEqual(rsvp, recovered)
+
+        rsvp = RSVP(guest.id)
+        rsvp.attending = True
+        rsvp.save()
+        json = rsvp.to_json()
+        recovered = RSVP.from_json(json)
+
+        self.assertEqual(rsvp, recovered)

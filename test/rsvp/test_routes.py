@@ -2,6 +2,10 @@ import unittest
 from test.helpers import with_client, setUpApp
 from test.helpers import with_context, setUpDB, tearDownDB
 from lxml.html import document_fromstring
+from app.invite.model import Invite
+from app.guest.model import Guest
+from app.rsvp.model import RSVP
+from flask import session
 
 
 class TestRoutes(unittest.TestCase):
@@ -13,6 +17,15 @@ class TestRoutes(unittest.TestCase):
     def tearDown(self):
         tearDownDB(self)
 
+    @staticmethod
+    def make_guest():
+        invite = Invite()
+        invite.save()
+
+        guest = Guest('John', 'Smith', invite.id)
+        guest.save()
+        return invite, guest
+
     @with_context
     @with_client
     def test_start_route(self, client):
@@ -21,7 +34,7 @@ class TestRoutes(unittest.TestCase):
 
     @with_context
     @with_client
-    def test_find_invite(self, client):
+    def test_find_invite_fail(self, client):
         res = client.post('/rsvp', data={'token': 'shouldfail'})
         html = document_fromstring(res.get_data())
         self.assertEqual(res.status_code, 200)
@@ -29,3 +42,36 @@ class TestRoutes(unittest.TestCase):
             html.xpath("//div[@class='error']/text()"),
             ["We couldn't find your invitation"]
         )
+
+    @with_context
+    @with_client
+    def test_find_invite_found(self, client):
+        (invite, guest) = self.make_guest()
+        res = client.post('/rsvp', data={'token': invite.token})
+        self.assertEqual(res.status_code, 302)
+        self.assertTrue(
+            res.location.endswith('/rsvp/'+invite.token+'/invite-details')
+        )
+
+    @with_context
+    @with_client
+    def test_invite_details(self, client):
+        (invite, guest) = self.make_guest()
+        res = client.get('/rsvp/'+invite.token+'/invite-details')
+        self.assertEqual(res.status_code, 200)
+
+    @with_context
+    @with_client
+    def test_rsvp_as_attending(self, client):
+        (invite, guest) = self.make_guest()
+        res = client.post(
+            '/rsvp/'+invite.token+'/invite-details',
+            data={
+                'guest_id': guest.id,
+                'attending': 'true'
+            }
+        )
+        self.assertEqual(res.status_code, 302)
+        rsvp = RSVP.from_json(session['rsvp'])
+        self.assertEqual(rsvp.attending, True)
+        self.assertEqual(rsvp.guest_id, guest.id)

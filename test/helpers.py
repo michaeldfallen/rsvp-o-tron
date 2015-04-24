@@ -27,6 +27,7 @@ def with_client(test):
 def setUpApp(self):
     app, manager = create_app()
     app.config['TESTING'] = True
+    app.config['WTF_CSRF_ENABLED'] = False
     self.app = app
     self.manager = manager
 

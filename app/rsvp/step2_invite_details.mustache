@@ -1,0 +1,49 @@
+<div class="invite">
+  <h1>
+    <ul>
+      {{#invite.guests}}
+      <li class="guest">{{first_name}} {{last_name}}</li>
+      {{/invite.guests}}
+    </ul>
+  </h1>
+
+  <h2>You are invited to our wedding</h2>
+
+  <p>on</p>
+
+  <p>September 26th 2015</p>
+
+  <p>at</p>
+
+  <ul>
+    <li>The Phantom House</li>
+    <li>Galgorm Resort</li>
+    <li>Northern Ireland</li>
+  </ul>
+</div>
+
+<form class="rsvp" method="POST">
+
+  <h2>Do you care about us at all?</h2>
+
+  <label for="enthusiastically-attend">
+    <input type="radio" id="gladly-attend" name="attendance" value="true">
+    I will gladly attend
+  </label>
+  <label for="resentfully-attend">
+    <input type="radio" id="resentfully-attend" name="attendance" value="true">
+    I will resentfully attend
+  </label>
+  <label for="regretfully-decline">
+    <input type="radio" id="regretfully-decline" name="attendance" value="false">
+    I regretfully decline
+  </label>
+  <label for="enthusiastically-decline">
+    <input type="radio" id="enthusiastically-decline" name="attendance" value="false">
+    I enthusiastically decline
+  </label>
+
+  {{{ form.csrf_token }}}
+
+  <input type="submit" value="continue" />
+</form>

@@ -8,3 +8,4 @@ Flask-WTF
 pytest
 colour-runner
 lxml
+jsonpickle
