@@ -1,0 +1,32 @@
+<h1>{{guest.first_name}} {{guest.last_name}}</h2>
+
+<form class="rsvp" method="POST">
+
+  <h2>Do you care about us at all?</h2>
+
+  <label for="gladly-attend">
+    <input type="radio" id="gladly-attend" name="attending" value="true">
+    I will gladly attend
+  </label>
+  <label for="resentfully-attend">
+    <input type="radio" id="resentfully-attend" name="attending" value="true">
+    I will resentfully attend
+  </label>
+  <label for="regretfully-decline">
+    <input type="radio" id="regretfully-decline" name="attending" value="false">
+    I regretfully decline
+  </label>
+  <label for="enthusiastically-decline">
+    <input type="radio" id="enthusiastically-decline" name="attending" value="false">
+    I enthusiastically decline
+  </label>
+
+  {{#invite.guests}}
+  <input type="hidden" id="guest_id" name="guest_id" value="{{id}}">
+  {{/invite.guests}}
+
+  {{{ form.csrf_token }}}
+
+  <input type="submit" value="continue" />
+</form>
+

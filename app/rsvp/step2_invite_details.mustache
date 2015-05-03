@@ -22,28 +22,6 @@
   </ul>
 </div>
 
-<form class="rsvp" method="POST">
-
-  <h2>Do you care about us at all?</h2>
-
-  <label for="enthusiastically-attend">
-    <input type="radio" id="gladly-attend" name="attendance" value="true">
-    I will gladly attend
-  </label>
-  <label for="resentfully-attend">
-    <input type="radio" id="resentfully-attend" name="attendance" value="true">
-    I will resentfully attend
-  </label>
-  <label for="regretfully-decline">
-    <input type="radio" id="regretfully-decline" name="attendance" value="false">
-    I regretfully decline
-  </label>
-  <label for="enthusiastically-decline">
-    <input type="radio" id="enthusiastically-decline" name="attendance" value="false">
-    I enthusiastically decline
-  </label>
-
-  {{{ form.csrf_token }}}
-
-  <input type="submit" value="continue" />
+<form method="post">
+  <input type="submit" value="Continue" />
 </form>

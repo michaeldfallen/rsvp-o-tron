@@ -1,6 +1,6 @@
 from flask import redirect, url_for, session
 from app.rsvp import views
-from app.rsvp.model import RSVP
+from app.rsvp.model import RSVPSet
 from app.invite.model import Invite
 from app.rsvp.forms import FindInviteForm, AttendanceForm
 
@@ -23,12 +23,23 @@ def register_routes(blueprint):
 
     @blueprint.route('/rsvp/<string:token>/invite-details')
     def invite_details(token):
-        form = AttendanceForm()
         invite = Invite.get(token)
-        return views.Step2InviteDetails(invite, form).render()
+        return views.Step2InviteDetails(invite).render()
 
     @blueprint.route('/rsvp/<string:token>/invite-details', methods=['POST'])
-    def attendance(token):
+    def invite_details_post(token):
+        invite = Invite.get(token)
+        rsvpset = RSVPSet(invite.id, invite.guests)
+        session['rsvp'] = rsvpset.to_json()
+        session.modified = True
+        return redirect(url_for('rsvp.respond', token=token))
+
+    @blueprint.route('/rsvp/<string:token>/respond')
+    def respond(token):
+        return views.Step3Respond().render()
+
+    @blueprint.route('/rsvp/<string:token>/respond', methods=['POST'])
+    def respond_post(token):
         form = AttendanceForm()
         invite = Invite.get(token)
         if form.validate_on_submit():
@@ -41,4 +52,5 @@ def register_routes(blueprint):
 
     @blueprint.route('/rsvp/<string:token>/confirm')
     def confirm(token):
-        return views.ConfirmStep().render()
+        rsvp = RSVP.from_json(session['rsvp'])
+        return views.ConfirmStep(rsvp).render()

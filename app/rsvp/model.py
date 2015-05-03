@@ -1,8 +1,8 @@
 from app.db import db
-import json
+from app import json
 
 
-class RSVP(db.Model):
+class RSVP(db.Model, json.Serialisable):
     __tablename__ = 'rsvp'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -32,39 +32,62 @@ class RSVP(db.Model):
     def get(_id):
         return RSVP.query.filter_by(id=_id).first()
 
-    def to_json(self):
-        def jdefault(o):
-            jsondata = {}
+    @staticmethod
+    def _json_format(o):
+        jsondata = {}
 
-            def append(name, parameter):
-                value = parameter(o)
-                if value is not None:
-                    jsondata[name] = value
+        def append(name, parameter):
+            value = parameter(o)
+            if value is not None:
+                jsondata[name] = value
 
-            append('guest_id', lambda obj: obj.guest_id)
-            append('id', lambda obj: obj.id)
-            append('attending', lambda obj: obj.attending)
+        append('guest_id', lambda obj: obj.guest_id)
+        append('id', lambda obj: obj.id)
+        append('attending', lambda obj: obj.attending)
 
-            return jsondata
-
-        return json.dumps(self, default=jdefault)
+        return jsondata
 
     @staticmethod
-    def from_json(jsondata):
-        def as_rsvp(dct):
-            _id = dct.get('id')
-            _attending = dct.get('attending')
-            _guest_id = dct.get('guest_id')
-            rsvp = RSVP(_guest_id)
-            rsvp.attending = _attending
-            rsvp.id = _id
-            return rsvp
-
-        return json.loads(jsondata, object_hook=as_rsvp)
+    def _object_hook(dct):
+        _id = dct.get('id')
+        _attending = dct.get('attending')
+        _guest_id = dct.get('guest_id')
+        rsvp = RSVP(_guest_id)
+        rsvp.attending = _attending
+        rsvp.id = _id
+        return rsvp
 
     def __repr__(self):
-        return '<RSVP(id {}, guest_id {}, attending{})>'.format(
+        return '<RSVP(id {}, guest_id {}, attending {})>'.format(
             self.id,
             self.guest_id,
             self.attending
         )
+
+
+class RSVPSet(json.Serialisable):
+
+    def __init__(self, invite_id, guests=[]):
+        self.invite_id = invite_id
+        self.rsvps = [RSVP(guest.id) for guest in guests]
+
+    @staticmethod
+    def _json_format(o):
+        return dict(o.__dict__)
+
+    @staticmethod
+    def _object_hook(dct):
+        _invite_id = dct.get('invite_id')
+        _rsvps = dct.get('rsvps')
+        rsvpset = RSVPSet(_invite_id)
+        rsvpset.rsvps = _rsvps
+        return rsvpset
+
+    def __repr__(self):
+        return '<RSVPset(invite_id {}, rsvps {})>'.format(
+            self.invite_id,
+            [rsvp.__repr__() for rsvp in self.rsvps]
+        )
+
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__

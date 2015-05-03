@@ -29,7 +29,7 @@ class TestViews(unittest.TestCase):
         jane.id = 2
         invite.guests = [joe, jane]
 
-        page = Step2InviteDetails(invite, TestForm())
+        page = Step2InviteDetails(invite)
 
         html = document_fromstring(page.render())
         self.assertEqual(

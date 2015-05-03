@@ -4,7 +4,7 @@ from test.helpers import with_context, setUpDB, tearDownDB
 from lxml.html import document_fromstring
 from app.invite.model import Invite
 from app.guest.model import Guest
-from app.rsvp.model import RSVP
+from app.rsvp.model import RSVPSet
 from flask import session
 
 
@@ -65,13 +65,16 @@ class TestRoutes(unittest.TestCase):
     def test_rsvp_as_attending(self, client):
         (invite, guest) = self.make_guest()
         res = client.post(
-            '/rsvp/'+invite.token+'/invite-details',
-            data={
-                'guest_id': guest.id,
-                'attending': 'true'
-            }
+            '/rsvp/'+invite.token+'/invite-details'
         )
         self.assertEqual(res.status_code, 302)
-        rsvp = RSVP.from_json(session['rsvp'])
-        self.assertEqual(rsvp.attending, True)
+        rsvpset = RSVPSet.from_json(session['rsvp'])
+
+        self.assertEqual(len(rsvpset.rsvps), 1)
+        self.assertEqual(rsvpset.invite_id, invite.id)
+
+        rsvp = rsvpset.rsvps[0]
+        self.assertEqual(rsvp.attending, None)
         self.assertEqual(rsvp.guest_id, guest.id)
+
+        self.assertIn('/rsvp/'+invite.token+'/respond', res.location)

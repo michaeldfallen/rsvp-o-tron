@@ -1,6 +1,6 @@
 import unittest
 from test.helpers import with_context, setUpDB, setUpApp, tearDownDB
-from app.rsvp.model import RSVP
+from app.rsvp.model import RSVP, RSVPSet
 from app.guest.model import Guest
 from app.invite.model import Invite
 from sqlalchemy.exc import IntegrityError
@@ -22,17 +22,19 @@ class TestModel(unittest.TestCase):
 
         guest = Guest('John', 'Smith', invite.id)
         guest.save()
-        return guest
+        return guest, invite
 
     @with_context
     def test_insert_fails_with_no_attendance(self):
-        rsvp = RSVP(self.make_guest().id)
+        guest, invite = self.make_guest()
+        rsvp = RSVP(guest.id)
         with self.assertRaises(IntegrityError):
             rsvp.save()
 
     @with_context
     def test_insert(self):
-        rsvp = RSVP(self.make_guest().id)
+        guest, invite = self.make_guest()
+        rsvp = RSVP(guest.id)
         rsvp.attending = True
         rsvp.save()
         savedrsvp = RSVP.get(rsvp.id)
@@ -40,7 +42,7 @@ class TestModel(unittest.TestCase):
 
     @with_context
     def test_relationship_to_guest(self):
-        guest = self.make_guest()
+        guest, invite = self.make_guest()
         rsvp = RSVP(guest.id)
         rsvp.attending = True
         rsvp.save()
@@ -57,7 +59,7 @@ class TestModel(unittest.TestCase):
 
     @with_context
     def test_rsvp_to_from_json(self):
-        guest = self.make_guest()
+        guest, invite = self.make_guest()
 
         rsvp = RSVP(guest.id)
         json = rsvp.to_json()
@@ -80,3 +82,14 @@ class TestModel(unittest.TestCase):
         recovered = RSVP.from_json(json)
 
         self.assertEqual(rsvp, recovered)
+
+    @with_context
+    def test_rsvpset_to_from_json(self):
+        guest, invite = self.make_guest()
+
+        rsvpset = RSVPSet(invite.id, invite.guests)
+
+        json = rsvpset.to_json()
+        recovered = RSVPSet.from_json(json)
+
+        self.assertEqual(rsvpset, recovered)

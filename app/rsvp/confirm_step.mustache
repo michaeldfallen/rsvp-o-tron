@@ -1,1 +1,10 @@
 <h1>Confirm your RSVP</h1>
+
+Your rsvp id {{rsvp.id}}
+Your guest id {{rsvp.guest_id}}
+{{#rsvp.attending}}
+You are attending
+{{/rsvp.attending}}
+{{^rsvp.attending}}
+You are not attending
+{{/rsvp.attending}}
