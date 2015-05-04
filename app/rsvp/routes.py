@@ -14,7 +14,7 @@ def __continue_or_go_to_confirm(rsvpset, token):
                                 **rsvpset.next_rsvp()))
     else:
         rsvpset.save_responses()
-        return redirect(url_for('rsvp.finished'))
+        return redirect(url_for('rsvp.finished', token=token))
 
 
 def register_routes(blueprint):
@@ -71,6 +71,8 @@ def register_routes(blueprint):
         rsvpset = RSVPSet.from_json(session['rsvp'])
         return views.ConfirmStep(rsvpset.rsvps).render()
 
-    @blueprint.route('/rsvp/finished')
-    def finished():
-        return views.FinishedStep().render()
+    @blueprint.route('/rsvp/<token>/finished')
+    def finished(token):
+        invite = Invite.get(token)
+        rsvps = [guest.rsvp for guest in invite.guests]
+        return views.FinishedStep(rsvps).render()
