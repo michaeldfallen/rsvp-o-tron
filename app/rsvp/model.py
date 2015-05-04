@@ -83,8 +83,11 @@ class RSVPSet(json.Serialisable):
             return o.attending is None
 
         unfinished_rsvps = filter(unfinished, self.rsvps)
-        rsvp = next(unfinished_rsvps)
-        return {'guest_id': rsvp.guest_id, 'name': rsvp.name.lower()}
+        rsvp = next(unfinished_rsvps, None)
+        if rsvp is not None:
+            return {'guest_id': rsvp.guest_id, 'name': rsvp.name.lower()}
+        else:
+            return None
 
     @staticmethod
     def _json_format(o):

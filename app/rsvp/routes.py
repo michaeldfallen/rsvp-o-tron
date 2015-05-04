@@ -6,6 +6,16 @@ from app.guest.model import Guest
 from app.rsvp.forms import FindInviteForm, AttendanceForm
 
 
+def __continue_or_go_to_confirm(rsvpset, token):
+    next_rsvp = rsvpset.next_rsvp()
+    if next_rsvp is not None:
+        return redirect(url_for('rsvp.attending',
+                                token=token,
+                                **rsvpset.next_rsvp()))
+    else:
+        return redirect(url_for('rsvp.confirm', token=token))
+
+
 def register_routes(blueprint):
     @blueprint.route('/rsvp')
     def start():
@@ -33,9 +43,7 @@ def register_routes(blueprint):
         rsvpset = RSVPSet(invite.id, invite.guests)
         session['rsvp'] = rsvpset.to_json()
         session.modified = True
-        return redirect(url_for('rsvp.attending',
-                                token=token,
-                                **rsvpset.next_rsvp()))
+        return __continue_or_go_to_confirm(rsvpset, token)
 
     @blueprint.route('/rsvp/<token>/<int:guest_id>/<name>/attending')
     def attending(token, guest_id, name):
@@ -52,7 +60,7 @@ def register_routes(blueprint):
             rsvpset.update_attending(guest_id, form.bind())
             session['rsvp'] = rsvpset.to_json()
             session.modified = True
-            return redirect(url_for('rsvp.confirm', token=token))
+            return __continue_or_go_to_confirm(rsvpset, token)
         else:
             guest = Guest.get(guest_id)
             return views.Step3Respond(form, guest).render()
