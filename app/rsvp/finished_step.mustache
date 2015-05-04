@@ -1,0 +1,21 @@
+<div class="attending">
+  <ul>
+    {{#people_attending}}
+    <li>{{guest.first_name}}</li>
+    {{/people_attending}}
+  </ul>
+  <p>
+    we are very pleased to hear you will be joining us
+    in celebrating our wedding.
+  </p>
+</div>
+<div class="avoiding">
+  <ul>
+    {{#people_avoiding}}
+    <li>{{guest.first_name}}</li>
+    {{/people_avoiding}}
+  </ul>
+  <p>
+    we are sad to hear you will be unable to join us.
+  </p>
+</div>

@@ -29,11 +29,23 @@ class RSVP(db.Model, json.Serialisable):
         ]
 
     def save(self):
+        existing = self.get_by_guest(self.guest_id)
+        if existing is not None:
+            existing.delete()
         db.session.add(self)
         db.session.commit()
 
+    @staticmethod
     def get(_id):
         return RSVP.query.filter_by(id=_id).first()
+
+    @staticmethod
+    def get_by_guest(_guest_id):
+        return RSVP.query.filter_by(guest_id=_guest_id).first()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
 
     @staticmethod
     def _json_format(o):
@@ -115,3 +127,7 @@ class RSVPSet(json.Serialisable):
             return o.guest_id is guest_id
 
         next(filter(by_guest_id, self.rsvps)).attending = attending
+
+    def save_responses(self):
+        for rsvp in self.rsvps:
+            rsvp.save()

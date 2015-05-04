@@ -29,3 +29,22 @@ class ConfirmStep(Template):
 
     def __init__(self, rsvps):
         self.rsvps = rsvps
+
+
+class FinishedStep(Template):
+    title = "Thanks for RSVPing"
+
+    def __init__(self, rsvps):
+        self.rsvps = rsvps
+
+    def people_attending(self):
+        def are_attending(o):
+            return o.attending
+
+        return filter(are_attending, self.rsvps)
+
+    def people_avoiding(self):
+        def are_not_attending(o):
+            return not o.attending
+
+        return filter(are_not_attending, self.rsvps)

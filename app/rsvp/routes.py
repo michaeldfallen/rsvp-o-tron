@@ -13,7 +13,8 @@ def __continue_or_go_to_confirm(rsvpset, token):
                                 token=token,
                                 **rsvpset.next_rsvp()))
     else:
-        return redirect(url_for('rsvp.confirm', token=token))
+        rsvpset.save_responses()
+        return redirect(url_for('rsvp.finished'))
 
 
 def register_routes(blueprint):
@@ -69,3 +70,7 @@ def register_routes(blueprint):
     def confirm(token):
         rsvpset = RSVPSet.from_json(session['rsvp'])
         return views.ConfirmStep(rsvpset.rsvps).render()
+
+    @blueprint.route('/rsvp/finished')
+    def finished():
+        return views.FinishedStep().render()
