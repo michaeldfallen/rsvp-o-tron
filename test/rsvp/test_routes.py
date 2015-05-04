@@ -62,7 +62,7 @@ class TestRoutes(unittest.TestCase):
 
     @with_context
     @with_client
-    def test_rsvp_as_attending(self, client):
+    def test_begin_responding(self, client):
         (invite, guest) = self.make_guest()
         res = client.post(
             '/rsvp/'+invite.token+'/invite-details'
@@ -77,4 +77,9 @@ class TestRoutes(unittest.TestCase):
         self.assertEqual(rsvp.attending, None)
         self.assertEqual(rsvp.guest_id, guest.id)
 
-        self.assertIn('/rsvp/'+invite.token+'/respond', res.location)
+        name = guest.first_name.lower()
+        guest_id = str(guest.id)
+        self.assertIn(
+            '/rsvp/'+invite.token+'/'+guest_id+'/'+name+'/attending',
+            res.location
+        )

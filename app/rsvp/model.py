@@ -11,17 +11,20 @@ class RSVP(db.Model, json.Serialisable):
 
     guest = db.relationship('Guest')
 
-    def __init__(self, guest_id):
+    def __init__(self, guest_id, name):
+        self.name = name
         self.guest_id = guest_id
 
     def __eq__(self, other):
         return [
             self.id,
             self.attending,
+            self.name,
             self.guest_id
         ] == [
             other.id,
             other.attending,
+            self.name,
             other.guest_id
         ]
 
@@ -44,6 +47,7 @@ class RSVP(db.Model, json.Serialisable):
         append('guest_id', lambda obj: obj.guest_id)
         append('id', lambda obj: obj.id)
         append('attending', lambda obj: obj.attending)
+        append('name', lambda obj: obj.name)
 
         return jsondata
 
@@ -51,16 +55,18 @@ class RSVP(db.Model, json.Serialisable):
     def _object_hook(dct):
         _id = dct.get('id')
         _attending = dct.get('attending')
+        _name = dct.get('name')
         _guest_id = dct.get('guest_id')
-        rsvp = RSVP(_guest_id)
+        rsvp = RSVP(_guest_id, _name)
         rsvp.attending = _attending
         rsvp.id = _id
         return rsvp
 
     def __repr__(self):
-        return '<RSVP(id {}, guest_id {}, attending {})>'.format(
+        return '<RSVP(id {}, guest_id {}, name {}, attending {})>'.format(
             self.id,
             self.guest_id,
+            self.name,
             self.attending
         )
 
@@ -69,7 +75,16 @@ class RSVPSet(json.Serialisable):
 
     def __init__(self, invite_id, guests=[]):
         self.invite_id = invite_id
-        self.rsvps = [RSVP(guest.id) for guest in guests]
+        self.rsvps = [RSVP(guest.id, guest.first_name) for guest in guests]
+
+    def next_rsvp(self):
+
+        def unfinished(o):
+            return o.attending is None
+
+        unfinished_rsvps = filter(unfinished, self.rsvps)
+        rsvp = next(unfinished_rsvps)
+        return {'guest_id': rsvp.guest_id, 'name': rsvp.name.lower()}
 
     @staticmethod
     def _json_format(o):

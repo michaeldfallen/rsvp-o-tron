@@ -27,14 +27,14 @@ class TestModel(unittest.TestCase):
     @with_context
     def test_insert_fails_with_no_attendance(self):
         guest, invite = self.make_guest()
-        rsvp = RSVP(guest.id)
+        rsvp = RSVP(guest.id, guest.first_name)
         with self.assertRaises(IntegrityError):
             rsvp.save()
 
     @with_context
     def test_insert(self):
         guest, invite = self.make_guest()
-        rsvp = RSVP(guest.id)
+        rsvp = RSVP(guest.id, guest.first_name)
         rsvp.attending = True
         rsvp.save()
         savedrsvp = RSVP.get(rsvp.id)
@@ -43,7 +43,7 @@ class TestModel(unittest.TestCase):
     @with_context
     def test_relationship_to_guest(self):
         guest, invite = self.make_guest()
-        rsvp = RSVP(guest.id)
+        rsvp = RSVP(guest.id, guest.first_name)
         rsvp.attending = True
         rsvp.save()
 
@@ -61,13 +61,13 @@ class TestModel(unittest.TestCase):
     def test_rsvp_to_from_json(self):
         guest, invite = self.make_guest()
 
-        rsvp = RSVP(guest.id)
+        rsvp = RSVP(guest.id, guest.first_name)
         json = rsvp.to_json()
         recovered = RSVP.from_json(json)
 
         self.assertEqual(rsvp, recovered)
 
-        rsvp = RSVP(guest.id)
+        rsvp = RSVP(guest.id, guest.first_name)
         rsvp.attending = True
         rsvp.save()
         json = rsvp.to_json()
@@ -75,7 +75,7 @@ class TestModel(unittest.TestCase):
 
         self.assertEqual(rsvp, recovered)
 
-        rsvp = RSVP(guest.id)
+        rsvp = RSVP(guest.id, guest.first_name)
         rsvp.attending = True
         rsvp.save()
         json = rsvp.to_json()

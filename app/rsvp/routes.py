@@ -32,10 +32,12 @@ def register_routes(blueprint):
         rsvpset = RSVPSet(invite.id, invite.guests)
         session['rsvp'] = rsvpset.to_json()
         session.modified = True
-        return redirect(url_for('rsvp.respond', token=token))
+        return redirect(url_for('rsvp.attending',
+                                token=token,
+                                **rsvpset.next_rsvp()))
 
-    @blueprint.route('/rsvp/<string:token>/respond')
-    def respond(token):
+    @blueprint.route('/rsvp/<token>/<int:guest_id>/<name>/attending')
+    def attending(token, guest_id, name):
         return views.Step3Respond().render()
 
     @blueprint.route('/rsvp/<string:token>/respond', methods=['POST'])
@@ -52,5 +54,5 @@ def register_routes(blueprint):
 
     @blueprint.route('/rsvp/<string:token>/confirm')
     def confirm(token):
-        rsvp = RSVP.from_json(session['rsvp'])
+        rsvp = RSVPSet.from_json(session['rsvp'])
         return views.ConfirmStep(rsvp).render()
