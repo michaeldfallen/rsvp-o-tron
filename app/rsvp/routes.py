@@ -2,6 +2,7 @@ from flask import redirect, url_for, session
 from app.rsvp import views
 from app.rsvp.model import RSVPSet
 from app.invite.model import Invite
+from app.guest.model import Guest
 from app.rsvp.forms import FindInviteForm, AttendanceForm
 
 
@@ -38,19 +39,23 @@ def register_routes(blueprint):
 
     @blueprint.route('/rsvp/<token>/<int:guest_id>/<name>/attending')
     def attending(token, guest_id, name):
-        return views.Step3Respond().render()
-
-    @blueprint.route('/rsvp/<string:token>/respond', methods=['POST'])
-    def respond_post(token):
         form = AttendanceForm()
-        invite = Invite.get(token)
+        guest = Guest.get(guest_id)
+        return views.Step3Respond(form, guest).render()
+
+    @blueprint.route('/rsvp/<token>/<int:guest_id>/<name>/attending',
+                     methods=['POST'])
+    def attending_post(token, guest_id, name):
+        form = AttendanceForm()
         if form.validate_on_submit():
-            rsvp = form.bind()
-            session['rsvp'] = rsvp.to_json()
+            rsvpset = RSVPSet.from_json(session['rsvp'])
+            rsvpset.update_attending(guest_id, form.bind())
+            session['rsvp'] = rsvpset.to_json()
             session.modified = True
             return redirect(url_for('rsvp.confirm', token=token))
         else:
-            return views.Step2InviteDetails(invite, form).render()
+            guest = Guest.get(guest_id)
+            return views.Step3Respond(form, guest).render()
 
     @blueprint.route('/rsvp/<string:token>/confirm')
     def confirm(token):

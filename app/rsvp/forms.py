@@ -1,6 +1,5 @@
 from flask_wtf import Form
 from wtforms import TextField, SelectField, validators
-from app.rsvp.model import RSVP
 
 
 class FindInviteForm(Form):
@@ -8,14 +7,11 @@ class FindInviteForm(Form):
 
 
 class AttendanceForm(Form):
-    guest_id = TextField('guest-id', [validators.DataRequired()])
     attending = SelectField(
         'attending',
         [validators.DataRequired()],
-        choices=[('true', 'False'), ('false', 'False')]
+        choices=[('true', 'True'), ('false', 'False')]
     )
 
     def bind(self):
-        rsvp = RSVP(int(self.guest_id.data))
-        rsvp.attending = bool(self.attending.data)
-        return rsvp
+        return self.attending.data in ['True', 'true']

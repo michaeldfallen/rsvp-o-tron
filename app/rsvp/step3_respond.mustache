@@ -21,10 +21,6 @@
     I enthusiastically decline
   </label>
 
-  {{#invite.guests}}
-  <input type="hidden" id="guest_id" name="guest_id" value="{{id}}">
-  {{/invite.guests}}
-
   {{{ form.csrf_token }}}
 
   <input type="submit" value="continue" />

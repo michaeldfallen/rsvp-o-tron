@@ -16,8 +16,12 @@ class Step2InviteDetails(Template):
         self.invite = invite
 
 
-class Step3Respond(Template):
+class Step3Respond(Template, FormHandler):
     title = "Will you attend?"
+
+    def __init__(self, form, guest):
+        self.guest = guest
+        self.form = form
 
 
 class ConfirmStep(Template):

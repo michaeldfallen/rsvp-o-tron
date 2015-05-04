@@ -106,3 +106,9 @@ class RSVPSet(json.Serialisable):
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
+
+    def update_attending(self, guest_id, attending):
+        def by_guest_id(o):
+            return o.guest_id is guest_id
+
+        next(filter(by_guest_id, self.rsvps)).attending = attending

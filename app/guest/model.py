@@ -29,6 +29,9 @@ class Guest(db.Model):
             self.invite_id
         )
 
+    def get(_id):
+        return Guest.query.filter_by(id=_id).first()
+
     def save(self):
         db.session.add(self)
         db.session.commit()
