@@ -27,5 +27,5 @@ class Step3Respond(Template, FormHandler):
 class ConfirmStep(Template):
     title = "Confirm your RSVP"
 
-    def __init__(self, rsvp):
-        self.rsvp = rsvp
+    def __init__(self, rsvps):
+        self.rsvps = rsvps

@@ -59,5 +59,5 @@ def register_routes(blueprint):
 
     @blueprint.route('/rsvp/<string:token>/confirm')
     def confirm(token):
-        rsvp = RSVPSet.from_json(session['rsvp'])
-        return views.ConfirmStep(rsvp).render()
+        rsvpset = RSVPSet.from_json(session['rsvp'])
+        return views.ConfirmStep(rsvpset.rsvps).render()
