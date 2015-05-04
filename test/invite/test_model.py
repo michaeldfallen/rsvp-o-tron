@@ -18,3 +18,8 @@ class TestModel(unittest.TestCase):
         invite.save()
         savedinvite = Invite.get(invite.token)
         self.assertEqual(invite.id, savedinvite.id)
+
+    def test_uuids_are_unique(self):
+        invite1 = Invite()
+        invite2 = Invite()
+        self.assertNotEqual(invite1.token, invite2.token)

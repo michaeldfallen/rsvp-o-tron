@@ -12,12 +12,11 @@ class Invite(db.Model):
         order_by='Guest.id',
         backref='invite_guests')
 
-    def __new_uuid():
+    def __new_uuid(self):
         return uuid.uuid4().hex[:6]
 
-    def __init__(self, token=__new_uuid()):  # , guests):
-        self.token = token
-    #    self.guests = guests
+    def __init__(self, token=None):
+        self.token = token if token is not None else self.__new_uuid()
 
     def __repr__(self):
         return '<Invite (id {})>'.format(self.id)

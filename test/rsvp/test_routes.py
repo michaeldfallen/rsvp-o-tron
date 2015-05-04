@@ -113,7 +113,8 @@ class TestRoutes(unittest.TestCase):
             data={'attending': 'true'}
         )
         self.assertEqual(res.status_code, 302)
-        self.assertIn(url_for('rsvp.finished'), res.location)
+        self.assertIn(url_for('rsvp.finished', token=invite.token),
+                      res.location)
 
         guest_from_db = Guest.get(guest.id)
         guests_rsvp = guest_from_db.rsvp
@@ -139,7 +140,8 @@ class TestRoutes(unittest.TestCase):
             data={'attending': 'false'}
         )
         self.assertEqual(res.status_code, 302)
-        self.assertIn(url_for('rsvp.finished'), res.location)
+        self.assertIn(url_for('rsvp.finished', token=invite.token),
+                      res.location)
 
         guest_from_db = Guest.get(guest.id)
         guests_rsvp = guest_from_db.rsvp
