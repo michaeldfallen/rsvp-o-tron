@@ -12,4 +12,4 @@ def create_app():
 
     manager = Manager(app)
     db.init(app, manager)
-    return app, manager
+    return manager

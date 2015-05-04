@@ -25,11 +25,11 @@ def with_client(test):
 
 
 def setUpApp(self):
-    app, manager = create_app()
-    app.config['TESTING'] = True
-    app.config['WTF_CSRF_ENABLED'] = False
-    self.app = app
+    manager = create_app()
+    self.app = manager.app
     self.manager = manager
+    self.app.config['TESTING'] = True
+    self.app.config['WTF_CSRF_ENABLED'] = False
 
 
 def setUpDB(self):
