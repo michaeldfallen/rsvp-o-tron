@@ -1,0 +1,26 @@
+<h1>Thank you for your response</h1>
+{{#are_people_attending}}
+<div class="attending">
+  <ul>
+    {{#people_attending}}
+    <li>{{guest.first_name}}</li>
+    {{/people_attending}}
+  </ul>
+  <p>
+    we are very pleased to hear you will be joining us
+    in celebrating our wedding.
+  </p>
+</div>
+{{/are_people_attending}}
+{{#are_people_avoiding}}
+<div class="avoiding">
+  <ul>
+    {{#people_avoiding}}
+    <li>{{guest.first_name}}</li>
+    {{/people_avoiding}}
+  </ul>
+  <p>
+    we are sad to hear you will be unable to join us.
+  </p>
+</div>
+{{/are_people_avoiding}}

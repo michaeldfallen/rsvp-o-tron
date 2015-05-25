@@ -1,0 +1,6 @@
+run: foreman start
+test: foreman run python test.py
+migrate: foreman run python app.py db migrate
+upgrade: foreman run python app.py db upgrade
+install: pip install -r requirements.txt
+console: foreman run python

@@ -10,6 +10,7 @@ class Guest(db.Model):
     invite_id = db.Column(db.Integer, db.ForeignKey('invite.id'))
 
     invite = db.relationship('Invite')
+    rsvp = db.relationship('RSVP', uselist=False, backref='guest_rsvp')
 
     def __init__(
             self,
@@ -27,6 +28,9 @@ class Guest(db.Model):
             self.last_name,
             self.invite_id
         )
+
+    def get(_id):
+        return Guest.query.filter_by(id=_id).first()
 
     def save(self):
         db.session.add(self)

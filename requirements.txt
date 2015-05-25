@@ -5,3 +5,7 @@ psycopg2
 Flask-SQLAlchemy
 Flask-Migrate
 Flask-WTF
+pytest
+colour-runner
+lxml
+jsonpickle

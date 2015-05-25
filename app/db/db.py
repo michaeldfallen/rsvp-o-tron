@@ -10,6 +10,3 @@ def init(app, manager):
     db.init_app(app)
     migrate.init_app(app, db, 'app/db/migrations')
     manager.add_command('db', MigrateCommand)
-
-#    with app.app_context():
-#        db.create_all()

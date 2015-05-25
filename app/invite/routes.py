@@ -17,10 +17,10 @@ def register_routes(blueprint):
     def create_invite():
         invite = Invite()
         Invite.save(invite)
-        return redirect(url_for('list_invites'))
+        return redirect(url_for('invite.list_invites'))
 
     @blueprint.route('/invite/<token>/delete', methods=['POST'])
     @blueprint.route('/invite/<token>', methods=['DELETE'])
     def delete_invite(token):
         Invite.delete(token)
-        return redirect(url_for('list_invites'))
+        return redirect(url_for('invite.list_invites'))

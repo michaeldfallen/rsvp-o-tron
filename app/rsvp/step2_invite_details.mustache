@@ -1,0 +1,27 @@
+<div class="invite">
+  <h1>
+    <ul>
+      {{#invite.guests}}
+      <li class="guest">{{first_name}} {{last_name}}</li>
+      {{/invite.guests}}
+    </ul>
+  </h1>
+
+  <h2>You are invited to our wedding</h2>
+
+  <p>on</p>
+
+  <p>September 26th 2015</p>
+
+  <p>at</p>
+
+  <ul>
+    <li>The Phantom House</li>
+    <li>Galgorm Resort</li>
+    <li>Northern Ireland</li>
+  </ul>
+</div>
+
+<form method="post">
+  <input type="submit" value="Continue" />
+</form>
