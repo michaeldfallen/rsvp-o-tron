@@ -43,8 +43,14 @@ class FinishedStep(Template):
 
         return filter(are_attending, self.rsvps)
 
+    def are_people_attending(self):
+        return len(list(self.people_attending())) != 0
+
     def people_avoiding(self):
         def are_not_attending(o):
             return not o.attending
 
         return filter(are_not_attending, self.rsvps)
+
+    def are_people_avoiding(self):
+        return len(list(self.people_avoiding())) != 0
