@@ -127,6 +127,22 @@ class TestRoutes(unittest.TestCase):
         self.assertEqual(rsvp.guest_id, guest.id)
         self.assertEqual(rsvp.name, guest.first_name)
 
+    @with_context
+    @with_client
+    def test_respond_not_attending(self, client):
+        (invite, guest) = self.make_guest()
+        res = client.get(url_for('rsvp.attending',
+                                 token=invite.token,
+                                 guest_id=guest.id,
+                                 name=guest.first_name.lower()))
+
+        html = document_fromstring(res.get_data())
+        self.assertEqual(res.status_code, 200)
+        self.assertIn(
+            "{} {}".format(guest.first_name, guest.last_name),
+            html.xpath("//h1/text()")[0]
+        )
+
         with client.session_transaction() as sesh:
             rsvpset = RSVPSet(invite.id, invite.guests)
             sesh['rsvp'] = rsvpset.to_json()

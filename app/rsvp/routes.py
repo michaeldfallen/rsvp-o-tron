@@ -3,7 +3,7 @@ from app.rsvp import views
 from app.rsvp.model import RSVPSet
 from app.invite.model import Invite
 from app.guest.model import Guest
-from app.rsvp.forms import FindInviteForm, AttendanceForm
+from app.rsvp.forms import FindInviteForm, AttendanceForm, MenuOptionForm
 
 
 def __continue_or_go_to_confirm(rsvpset, token):
@@ -65,6 +65,12 @@ def register_routes(blueprint):
         else:
             guest = Guest.get(guest_id)
             return views.Step3Respond(form, guest).render()
+
+    @blueprint.route('/rsvp/<token>/<int:guest_id>/<name>/attending')
+    def menu_choice(token, guest_id, name):
+        form = MenuOptionForm()
+        guest = Guest.get(guest_id)
+        return views.Step4MenuChoices(form, guest).render()
 
     @blueprint.route('/rsvp/<string:token>/confirm')
     def confirm(token):

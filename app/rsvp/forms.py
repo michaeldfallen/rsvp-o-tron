@@ -15,3 +15,7 @@ class AttendanceForm(Form):
 
     def bind(self):
         return self.attending.data in ['True', 'true']
+
+
+class MenuOptionForm(Form):
+    pass
