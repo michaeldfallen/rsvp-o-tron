@@ -169,3 +169,49 @@ class TestRoutes(unittest.TestCase):
         self.assertEqual(rsvp.attending, False)
         self.assertEqual(rsvp.guest_id, guest.id)
         self.assertEqual(rsvp.name, guest.first_name)
+
+    @with_context
+    @with_client
+    def test_respond_menu_choice(self, client):
+        (invite, guest) = self.make_guest()
+        res = client.get(url_for('rsvp.attending',
+                                 token=invite.token,
+                                 guest_id=guest.id,
+                                 name=guest.first_name.lower()))
+
+        html = document_fromstring(res.get_data())
+        self.assertEqual(res.status_code, 200)
+        self.assertIn(
+            "{} {}".format(guest.first_name, guest.last_name),
+            html.xpath("//h1/text()")[0]
+        )
+
+        with client.session_transaction() as sesh:
+            rsvpset = RSVPSet(invite.id, invite.guests)
+            for rsvp in rsvpset.rsvps:
+                rsvp.attending = True
+
+            sesh['rsvp'] = rsvpset.to_json()
+            sesh.modified = True
+
+        res = client.post(
+            url_for(
+                'rsvp.menu_choice',
+                token=invite.token,
+                guest_id=guest.id,
+                name=guest.first_name.lower()
+            ),
+            data={'menu_choice': 'chicken'}
+        )
+        self.assertEquals(res.status_code, 302)
+        self.assertIn(
+            url_for('rsvp.finished', token=invite.token),
+            res.location
+        )
+
+        rsvpset = RSVPSet.from_json(session['rsvp'])
+        rsvp = rsvpset.rsvps[0]
+        self.assertEqual(rsvp.attending, True)
+        self.assertEqual(rsvp.menu_choice, 'chicken')
+        self.assertEqual(rsvp.guest_id, guest.id)
+        self.assertEqual(rsvp.name, guest.first_name)

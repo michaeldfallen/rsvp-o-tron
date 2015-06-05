@@ -78,6 +78,20 @@ def register_routes(blueprint):
         guest = Guest.get(guest_id)
         return views.Step4MenuChoices(form, guest).render()
 
+    @blueprint.route('/rsvp/<token>/<int:guest_id>/<name>/menu-choice',
+                     methods=['POST'])
+    def menu_choice_post(token, guest_id, name):
+        form = MenuOptionForm()
+        if form.validate_on_submit():
+            rsvpset = RSVPSet.from_json(session['rsvp'])
+            rsvpset.update_menu_choice(guest_id, form.bind())
+            session['rsvp'] = rsvpset.to_json()
+            session.modified = True
+            return __continue_or_go_to_confirm(rsvpset, token)
+        else:
+            guest = Guest.get(guest_id)
+            return views.Step4MenuChoices(form, guest).render()
+
     @blueprint.route('/rsvp/<string:token>/confirm')
     def confirm(token):
         rsvpset = RSVPSet.from_json(session['rsvp'])

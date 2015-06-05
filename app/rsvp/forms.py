@@ -18,4 +18,13 @@ class AttendanceForm(Form):
 
 
 class MenuOptionForm(Form):
-    pass
+    menu_choice = TextField(
+        'menu_choice',
+        [
+            validators.DataRequired(),
+            validators.AnyOf(['chicken', 'beef', 'vegetarian'])
+        ]
+    )
+
+    def bind(self):
+        return self.menu_choice.data
