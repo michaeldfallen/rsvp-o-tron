@@ -61,12 +61,18 @@ def register_routes(blueprint):
             rsvpset.update_attending(guest_id, form.bind())
             session['rsvp'] = rsvpset.to_json()
             session.modified = True
-            return __continue_or_go_to_confirm(rsvpset, token)
+            menu_choice_url = url_for(
+                'rsvp.menu_choice',
+                token=token,
+                guest_id=guest_id,
+                name=name
+            )
+            return redirect(menu_choice_url)
         else:
             guest = Guest.get(guest_id)
             return views.Step3Respond(form, guest).render()
 
-    @blueprint.route('/rsvp/<token>/<int:guest_id>/<name>/attending')
+    @blueprint.route('/rsvp/<token>/<int:guest_id>/<name>/menu-choice')
     def menu_choice(token, guest_id, name):
         form = MenuOptionForm()
         guest = Guest.get(guest_id)

@@ -28,6 +28,9 @@ class RSVP(db.Model, json.Serialisable):
             other.guest_id
         ]
 
+    def incomplete(self):
+        return self.attending is None
+
     def save(self):
         existing = self.get_by_guest(self.guest_id)
         if existing is not None:
@@ -91,8 +94,7 @@ class RSVPSet(json.Serialisable):
 
     def next_rsvp(self):
 
-        def unfinished(o):
-            return o.attending is None
+        def unfinished(o): return o.incomplete()
 
         unfinished_rsvps = filter(unfinished, self.rsvps)
         rsvp = next(unfinished_rsvps, None)
