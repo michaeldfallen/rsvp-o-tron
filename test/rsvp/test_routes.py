@@ -113,19 +113,35 @@ class TestRoutes(unittest.TestCase):
             data={'attending': 'true'}
         )
         self.assertEqual(res.status_code, 302)
-        self.assertIn(url_for('rsvp.finished', token=invite.token),
-                      res.location)
-
-        guest_from_db = Guest.get(guest.id)
-        guests_rsvp = guest_from_db.rsvp
-        self.assertIsNotNone(guests_rsvp)
-        self.assertEqual(guests_rsvp.attending, True)
+        menu_step = url_for(
+            'rsvp.menu_choice',
+            token=invite.token,
+            guest_id=guest.id,
+            name=guest.first_name.lower()
+        )
+        self.assertIn(menu_step, res.location)
 
         rsvpset = RSVPSet.from_json(session['rsvp'])
         rsvp = rsvpset.rsvps[0]
         self.assertEqual(rsvp.attending, True)
         self.assertEqual(rsvp.guest_id, guest.id)
         self.assertEqual(rsvp.name, guest.first_name)
+
+    @with_context
+    @with_client
+    def test_respond_not_attending(self, client):
+        (invite, guest) = self.make_guest()
+        res = client.get(url_for('rsvp.attending',
+                                 token=invite.token,
+                                 guest_id=guest.id,
+                                 name=guest.first_name.lower()))
+
+        html = document_fromstring(res.get_data())
+        self.assertEqual(res.status_code, 200)
+        self.assertIn(
+            "{} {}".format(guest.first_name, guest.last_name),
+            html.xpath("//h1/text()")[0]
+        )
 
         with client.session_transaction() as sesh:
             rsvpset = RSVPSet(invite.id, invite.guests)
@@ -140,16 +156,60 @@ class TestRoutes(unittest.TestCase):
             data={'attending': 'false'}
         )
         self.assertEqual(res.status_code, 302)
-        self.assertIn(url_for('rsvp.finished', token=invite.token),
-                      res.location)
-
-        guest_from_db = Guest.get(guest.id)
-        guests_rsvp = guest_from_db.rsvp
-        self.assertIsNotNone(guests_rsvp)
-        self.assertEqual(guests_rsvp.attending, False)
+        finished_step = url_for(
+            'rsvp.finished',
+            token=invite.token
+        )
+        self.assertIn(finished_step, res.location)
 
         rsvpset = RSVPSet.from_json(session['rsvp'])
         rsvp = rsvpset.rsvps[0]
         self.assertEqual(rsvp.attending, False)
+        self.assertEqual(rsvp.guest_id, guest.id)
+        self.assertEqual(rsvp.name, guest.first_name)
+
+    @with_context
+    @with_client
+    def test_respond_menu_choice(self, client):
+        (invite, guest) = self.make_guest()
+        res = client.get(url_for('rsvp.attending',
+                                 token=invite.token,
+                                 guest_id=guest.id,
+                                 name=guest.first_name.lower()))
+
+        html = document_fromstring(res.get_data())
+        self.assertEqual(res.status_code, 200)
+        self.assertIn(
+            "{} {}".format(guest.first_name, guest.last_name),
+            html.xpath("//h1/text()")[0]
+        )
+
+        with client.session_transaction() as sesh:
+            rsvpset = RSVPSet(invite.id, invite.guests)
+            for rsvp in rsvpset.rsvps:
+                rsvp.attending = True
+
+            sesh['rsvp'] = rsvpset.to_json()
+            sesh.modified = True
+
+        res = client.post(
+            url_for(
+                'rsvp.menu_choice',
+                token=invite.token,
+                guest_id=guest.id,
+                name=guest.first_name.lower()
+            ),
+            data={'menu_choice': 'turkey'}
+        )
+        self.assertEquals(res.status_code, 302)
+        self.assertIn(
+            url_for('rsvp.finished', token=invite.token),
+            res.location
+        )
+
+        rsvpset = RSVPSet.from_json(session['rsvp'])
+        rsvp = rsvpset.rsvps[0]
+        self.assertEqual(rsvp.attending, True)
+        self.assertEqual(rsvp.menu_choice, 'turkey')
         self.assertEqual(rsvp.guest_id, guest.id)
         self.assertEqual(rsvp.name, guest.first_name)

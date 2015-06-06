@@ -15,3 +15,16 @@ class AttendanceForm(Form):
 
     def bind(self):
         return self.attending.data in ['True', 'true']
+
+
+class MenuOptionForm(Form):
+    menu_choice = TextField(
+        'menu_choice',
+        [
+            validators.DataRequired(),
+            validators.AnyOf(['turkey', 'beef', 'vegetarian'])
+        ]
+    )
+
+    def bind(self):
+        return self.menu_choice.data

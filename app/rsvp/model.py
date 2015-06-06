@@ -8,6 +8,7 @@ class RSVP(db.Model, json.Serialisable):
     id = db.Column(db.Integer, primary_key=True)
     attending = db.Column(db.Boolean(), nullable=False)
     guest_id = db.Column(db.Integer, db.ForeignKey('guest.id'))
+    menu_choice = db.Column(db.String)
 
     guest = db.relationship('Guest')
 
@@ -20,13 +21,20 @@ class RSVP(db.Model, json.Serialisable):
             self.id,
             self.attending,
             self.name,
-            self.guest_id
+            self.guest_id,
+            self.menu_choice
         ] == [
             other.id,
             other.attending,
-            self.name,
-            other.guest_id
+            other.name,
+            other.guest_id,
+            other.menu_choice
         ]
+
+    def incomplete(self):
+        return self.attending is None or (
+            self.attending and self.menu_choice is None
+        )
 
     def save(self):
         existing = self.get_by_guest(self.guest_id)
@@ -59,6 +67,7 @@ class RSVP(db.Model, json.Serialisable):
         append('guest_id', lambda obj: obj.guest_id)
         append('id', lambda obj: obj.id)
         append('attending', lambda obj: obj.attending)
+        append('menu_choice', lambda obj: obj.menu_choice)
         append('name', lambda obj: obj.name)
 
         return jsondata
@@ -69,17 +78,22 @@ class RSVP(db.Model, json.Serialisable):
         _attending = dct.get('attending')
         _name = dct.get('name')
         _guest_id = dct.get('guest_id')
+        _menu_choice = dct.get('menu_choice')
         rsvp = RSVP(_guest_id, _name)
         rsvp.attending = _attending
+        rsvp.menu_choice = _menu_choice
         rsvp.id = _id
         return rsvp
 
     def __repr__(self):
-        return '<RSVP(id {}, guest_id {}, name {}, attending {})>'.format(
+        return (
+            '<RSVP(id {}, guest_id {}, name {}, attending {}, menu_choice {})>'
+        ).format(
             self.id,
             self.guest_id,
             self.name,
-            self.attending
+            self.attending,
+            self.menu_choice
         )
 
 
@@ -89,10 +103,14 @@ class RSVPSet(json.Serialisable):
         self.invite_id = invite_id
         self.rsvps = [RSVP(guest.id, guest.first_name) for guest in guests]
 
+    def rsvp_for(self, guest_id):
+        def by_id(o): return o.guest_id == guest_id
+
+        return next(filter(by_id, self.rsvps))
+
     def next_rsvp(self):
 
-        def unfinished(o):
-            return o.attending is None
+        def unfinished(o): return o.incomplete()
 
         unfinished_rsvps = filter(unfinished, self.rsvps)
         rsvp = next(unfinished_rsvps, None)
@@ -127,6 +145,12 @@ class RSVPSet(json.Serialisable):
             return o.guest_id is guest_id
 
         next(filter(by_guest_id, self.rsvps)).attending = attending
+
+    def update_menu_choice(self, guest_id, menu_choice):
+        def by_guest_id(o):
+            return o.guest_id is guest_id
+
+        next(filter(by_guest_id, self.rsvps)).menu_choice = menu_choice
 
     def save_responses(self):
         for rsvp in self.rsvps:

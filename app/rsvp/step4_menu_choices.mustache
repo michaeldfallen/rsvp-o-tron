@@ -1,0 +1,42 @@
+<h1>{{guest.first_name}} {{guest.last_name}}</h1>
+
+<h2>We would love for you share our first dinner together</h2>
+
+<h3>For starters we will have</h3>
+
+<p>Confit duck leg with spicy noodles, honey, chilli and mint sauce</p>
+
+<h3>For soup we will be having</h3>
+
+<p>Garden vegetable broth</p>
+
+<h3>And dessert will be</h3>
+
+<p>Raspberry ruffle cheesecake with red berry coulis</p>
+
+<form class="rsvp" method="POST">
+  <h2>What would you like for your main course?</h2>
+
+  <label for="menu-turkey">
+    <input type="radio" id="menu-turkey" name="menu_choice" value="turkey">
+    Stuffed Antrim turkey and honey roast ham,
+    garnished with chipolata sausage,
+    cranberries and port sauce
+  </label>
+
+  <label for="menu-beef">
+    <input type="radio" id="menu-beef" name="menu_choice" value="beef" />
+    Roast prime sirloin of beef
+    with tomato, mushroom and oregano sauce
+    or pink peppercorn sauce
+  </label>
+
+  <label for="menu-veg">
+    <input type="radio" id="menu-veg" name="menu_choice" value="vegetarian" />
+    The vegetarian option
+  </label>
+
+  {{{ form.csrf_token }}}
+
+  <input type="submit" value="Continue" />
+</form>

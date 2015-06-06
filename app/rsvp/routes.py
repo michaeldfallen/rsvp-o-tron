@@ -3,7 +3,7 @@ from app.rsvp import views
 from app.rsvp.model import RSVPSet
 from app.invite.model import Invite
 from app.guest.model import Guest
-from app.rsvp.forms import FindInviteForm, AttendanceForm
+from app.rsvp.forms import FindInviteForm, AttendanceForm, MenuOptionForm
 
 
 def __continue_or_go_to_confirm(rsvpset, token):
@@ -15,6 +15,18 @@ def __continue_or_go_to_confirm(rsvpset, token):
     else:
         rsvpset.save_responses()
         return redirect(url_for('rsvp.finished', token=token))
+
+
+def __menu_choice_or_continue(current_rsvp, rsvpset, token):
+    if current_rsvp.incomplete():
+        return redirect(url_for(
+            'rsvp.menu_choice',
+            token=token,
+            name=current_rsvp.name.lower(),
+            guest_id=current_rsvp.guest_id
+        ))
+    else:
+        return __continue_or_go_to_confirm(rsvpset, token)
 
 
 def register_routes(blueprint):
@@ -61,10 +73,34 @@ def register_routes(blueprint):
             rsvpset.update_attending(guest_id, form.bind())
             session['rsvp'] = rsvpset.to_json()
             session.modified = True
-            return __continue_or_go_to_confirm(rsvpset, token)
+            return __menu_choice_or_continue(
+                rsvpset.rsvp_for(guest_id),
+                rsvpset,
+                token
+            )
         else:
             guest = Guest.get(guest_id)
             return views.Step3Respond(form, guest).render()
+
+    @blueprint.route('/rsvp/<token>/<int:guest_id>/<name>/menu-choice')
+    def menu_choice(token, guest_id, name):
+        form = MenuOptionForm()
+        guest = Guest.get(guest_id)
+        return views.Step4MenuChoices(form, guest).render()
+
+    @blueprint.route('/rsvp/<token>/<int:guest_id>/<name>/menu-choice',
+                     methods=['POST'])
+    def menu_choice_post(token, guest_id, name):
+        form = MenuOptionForm()
+        if form.validate_on_submit():
+            rsvpset = RSVPSet.from_json(session['rsvp'])
+            rsvpset.update_menu_choice(guest_id, form.bind())
+            session['rsvp'] = rsvpset.to_json()
+            session.modified = True
+            return __continue_or_go_to_confirm(rsvpset, token)
+        else:
+            guest = Guest.get(guest_id)
+            return views.Step4MenuChoices(form, guest).render()
 
     @blueprint.route('/rsvp/<string:token>/confirm')
     def confirm(token):

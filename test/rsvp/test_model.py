@@ -93,3 +93,26 @@ class TestModel(unittest.TestCase):
         recovered = RSVPSet.from_json(json)
 
         self.assertEqual(rsvpset, recovered)
+
+    @with_context
+    def test_complete_if_attending_and_beef(self):
+        guest, invite = self.make_guest()
+        rsvp = RSVP(guest.id, guest.first_name)
+
+        self.assertTrue(rsvp.incomplete())
+
+        rsvp.attending = True
+        rsvp.menu_choice = 'beef'
+        self.assertFalse(rsvp.incomplete())
+
+        rsvp.attending = True
+        rsvp.menu_choice = 'turkey'
+        self.assertFalse(rsvp.incomplete())
+
+        rsvp.attending = True
+        rsvp.menu_choice = 'vegetarian'
+        self.assertFalse(rsvp.incomplete())
+
+        rsvp.attending = False
+        rsvp.menu_choice = None
+        self.assertFalse(rsvp.incomplete())
