@@ -14,13 +14,14 @@
     <td>{{token}}</td>
     <td>
       <table border="0">
-        <tr><th>Name</th><th>Response</th><th>Actions</th></tr>
+        <tr><th>Name</th><th>Response</th><th>Dinner choice</th><th>Actions</th></tr>
         {{#guests}}
         <tr>
           <td>{{first_name}} {{last_name}}</td>
           {{#rsvp}}
           {{#attending}}<td>Attending</td>{{/attending}}
           {{^attending}}<td>Not Attending</td>{{/attending}}
+          <td>{{menu_choice}}</td>
           {{/rsvp}}
           {{^rsvp}}
             <td>Not responded yet</td>
