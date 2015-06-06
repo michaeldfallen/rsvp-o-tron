@@ -22,7 +22,7 @@ class MenuOptionForm(Form):
         'menu_choice',
         [
             validators.DataRequired(),
-            validators.AnyOf(['chicken', 'beef', 'vegetarian'])
+            validators.AnyOf(['turkey', 'beef', 'vegetarian'])
         ]
     )
 

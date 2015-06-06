@@ -17,6 +17,18 @@ def __continue_or_go_to_confirm(rsvpset, token):
         return redirect(url_for('rsvp.finished', token=token))
 
 
+def __menu_choice_or_continue(current_rsvp, rsvpset, token):
+    if current_rsvp.incomplete():
+        return redirect(url_for(
+            'rsvp.menu_choice',
+            token=token,
+            name=current_rsvp.name.lower(),
+            guest_id=current_rsvp.guest_id
+        ))
+    else:
+        return __continue_or_go_to_confirm(rsvpset, token)
+
+
 def register_routes(blueprint):
     @blueprint.route('/rsvp')
     def start():
@@ -61,13 +73,11 @@ def register_routes(blueprint):
             rsvpset.update_attending(guest_id, form.bind())
             session['rsvp'] = rsvpset.to_json()
             session.modified = True
-            menu_choice_url = url_for(
-                'rsvp.menu_choice',
-                token=token,
-                guest_id=guest_id,
-                name=name
+            return __menu_choice_or_continue(
+                rsvpset.rsvp_for(guest_id),
+                rsvpset,
+                token
             )
-            return redirect(menu_choice_url)
         else:
             guest = Guest.get(guest_id)
             return views.Step3Respond(form, guest).render()

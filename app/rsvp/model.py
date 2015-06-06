@@ -32,7 +32,9 @@ class RSVP(db.Model, json.Serialisable):
         ]
 
     def incomplete(self):
-        return self.attending is None or self.menu_choice is None
+        return self.attending is None or (
+            self.attending and self.menu_choice is None
+        )
 
     def save(self):
         existing = self.get_by_guest(self.guest_id)
@@ -100,6 +102,11 @@ class RSVPSet(json.Serialisable):
     def __init__(self, invite_id, guests=[]):
         self.invite_id = invite_id
         self.rsvps = [RSVP(guest.id, guest.first_name) for guest in guests]
+
+    def rsvp_for(self, guest_id):
+        def by_id(o): return o.guest_id == guest_id
+
+        return next(filter(by_id, self.rsvps))
 
     def next_rsvp(self):
 

@@ -156,13 +156,11 @@ class TestRoutes(unittest.TestCase):
             data={'attending': 'false'}
         )
         self.assertEqual(res.status_code, 302)
-        menu_step = url_for(
-            'rsvp.menu_choice',
-            token=invite.token,
-            guest_id=guest.id,
-            name=guest.first_name.lower()
+        finished_step = url_for(
+            'rsvp.finished',
+            token=invite.token
         )
-        self.assertIn(menu_step, res.location)
+        self.assertIn(finished_step, res.location)
 
         rsvpset = RSVPSet.from_json(session['rsvp'])
         rsvp = rsvpset.rsvps[0]
@@ -201,7 +199,7 @@ class TestRoutes(unittest.TestCase):
                 guest_id=guest.id,
                 name=guest.first_name.lower()
             ),
-            data={'menu_choice': 'chicken'}
+            data={'menu_choice': 'turkey'}
         )
         self.assertEquals(res.status_code, 302)
         self.assertIn(
@@ -212,6 +210,6 @@ class TestRoutes(unittest.TestCase):
         rsvpset = RSVPSet.from_json(session['rsvp'])
         rsvp = rsvpset.rsvps[0]
         self.assertEqual(rsvp.attending, True)
-        self.assertEqual(rsvp.menu_choice, 'chicken')
+        self.assertEqual(rsvp.menu_choice, 'turkey')
         self.assertEqual(rsvp.guest_id, guest.id)
         self.assertEqual(rsvp.name, guest.first_name)

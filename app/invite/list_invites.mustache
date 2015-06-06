@@ -11,7 +11,7 @@
   </tr>
   {{#invites}}
   <tr>
-    <td>{{token}}</td>
+    <td class="token">{{token}}</td>
     <td>
       <table border="0">
         <tr><th>Name</th><th>Response</th><th>Dinner choice</th><th>Actions</th></tr>
@@ -28,7 +28,7 @@
           {{/rsvp}}
           <td>
             <form method="POST" action="/invite/{{token}}/guest/{{id}}/delete">
-              <input type="submit" value="Delete" />
+              <input type="submit" value="Delete Guest" />
             </form>
           </td>
         </tr>
@@ -40,7 +40,7 @@
     </td>
     <td>
       <form method="POST" action="/invite/{{token}}/delete">
-        <input type="submit" value="Delete" />
+        <input type="submit" value="Delete Invite" />
       </form>
     </td>
   </tr>
