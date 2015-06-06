@@ -25,6 +25,7 @@ class Step3Respond(Template, FormHandler):
 
 
 class Step4MenuChoices(Template, FormHandler):
+    title = "What would you like for dinner"
 
     def __init__(self, form, guest):
         self.guest = guest
