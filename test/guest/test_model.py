@@ -21,3 +21,20 @@ class TestModel(unittest.TestCase):
         guest.save()
 
         self.assertEqual(guest, Guest.get(guest.id))
+
+    @with_context
+    def test_child_guest(self):
+        invite = Invite()
+        invite.save()
+        guest = Guest('Jim', 'Smith', invite.id)
+        guest.is_child = True
+        guest.save()
+
+        self.assertEqual(guest, Guest.get(guest.id))
+        self.assertTrue(Guest.get(guest.id).is_child)
+
+        guest.is_child = False
+        guest.save()
+
+        self.assertEqual(guest, Guest.get(guest.id))
+        self.assertFalse(Guest.get(guest.id).is_child)
