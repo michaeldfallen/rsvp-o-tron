@@ -19,6 +19,9 @@
 
   <label for="menu-turkey">
     <input type="radio" id="menu-turkey" name="menu_choice" value="turkey">
+    {{#guest.is_child}}
+    A half portion of
+    {{/guest.is_child}}
     Stuffed Antrim turkey and honey roast ham,
     garnished with chipolata sausage,
     cranberries and port sauce
@@ -26,6 +29,9 @@
 
   <label for="menu-beef">
     <input type="radio" id="menu-beef" name="menu_choice" value="beef" />
+    {{#guest.is_child}}
+    A half portion of
+    {{/guest.is_child}}
     Roast prime sirloin of beef
     with tomato, mushroom and oregano sauce
     or pink peppercorn sauce
@@ -33,6 +39,9 @@
 
   <label for="menu-veg">
     <input type="radio" id="menu-veg" name="menu_choice" value="vegetarian" />
+    {{#guest.is_child}}
+    A half portion of
+    {{/guest.is_child}}
     The vegetarian option
   </label>
 

@@ -14,7 +14,8 @@ def register_routes(blueprint):
             guest = Guest(
                 form.first_name.data,
                 form.last_name.data,
-                invite.id
+                invite.id,
+                is_child=form.is_child.data
             )
             guest.save()
             return redirect(url_for('invite.list_invites'))

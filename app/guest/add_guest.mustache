@@ -11,6 +11,11 @@
     <input type="text" name="last_name" id="last_name" value="" />
   </label>
 
+  <label for="is_child">
+    <input type="checkbox" name="is_child" id="is_child" />
+    Child
+  </label>
+
   {{{ form.csrf_token }}}
   {{#errors}}
   <span class="error">{{error}}</span>
