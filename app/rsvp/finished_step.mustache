@@ -1,4 +1,14 @@
-<h1>Thank you for your response</h1>
+<h1>
+  {{#already_finished}}
+  You've already responded
+  {{/already_finished}}
+  {{^already_finished}}
+  Thank you for your response
+  {{/already_finished}}
+</h1>
+{{#already_finished}}
+<p>If you'd like to change your answers just pick up a phone and call us.</p>
+{{/already_finished}}
 {{#are_people_attending}}
 <div class="attending">
   <ul>
@@ -10,6 +20,16 @@
     we are very pleased to hear you will be joining us
     in celebrating our wedding.
   </p>
+  <h3>For dinner you chose</h3>
+  <ul>
+    {{#menu_choices}}
+    <li>
+      {{name}}
+      is having
+      {{choice}}
+    </li>
+    {{/menu_choices}}
+  </ul>
 </div>
 {{/are_people_attending}}
 {{#are_people_avoiding}}

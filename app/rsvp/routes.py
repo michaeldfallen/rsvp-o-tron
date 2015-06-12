@@ -42,6 +42,9 @@ def register_routes(blueprint):
         if invite is None:
             form.errors["global"] = ["We couldn't find your invitation"]
             return views.Step1Start(form).render()
+        elif invite.is_complete():
+            return redirect(url_for('rsvp.already_finished',
+                            token=invite.token))
         else:
             return redirect(url_for('rsvp.invite_details', token=invite.token))
 
@@ -106,6 +109,15 @@ def register_routes(blueprint):
     def confirm(token):
         rsvpset = RSVPSet.from_json(session['rsvp'])
         return views.ConfirmStep(rsvpset.rsvps).render()
+
+    @blueprint.route('/rsvp/<token>')
+    def already_finished(token):
+        invite = Invite.get(token)
+        if invite is None:
+            return redirect(url_for('rsvp.start'))
+        else:
+            rsvps = [guest.rsvp for guest in invite.guests]
+            return views.FinishedStep(rsvps, already_finished=True).render()
 
     @blueprint.route('/rsvp/<token>/finished')
     def finished(token):
