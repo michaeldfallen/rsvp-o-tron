@@ -88,3 +88,37 @@ class TestViews(unittest.TestCase):
         self.assertFalse(view.are_people_avoiding())
         self.assertEqual([jane_rsvp, joe_rsvp], list(view.people_attending()))
         self.assertTrue(view.are_people_attending())
+
+    def test_readable_menu_choices(self):
+        john = RSVP(1234, "John")
+        john.attending = True
+        john.menu_choice = "turkey"
+
+        george = RSVP(1231, "George")
+        george.attending = False
+
+        ringo = RSVP(1232, "Ringo")
+        ringo.attending = True
+        ringo.menu_choice = "beef"
+
+        paul = RSVP(1233, "Paul")
+        paul.attending = True
+        paul.menu_choice = "vegetarian"
+
+        rsvps = [john, paul, george, ringo]
+
+        expected = [
+            {
+                "name": "John",
+                "choice": "the Turkey and Ham"
+            },
+            {
+                "name": "Paul",
+                "choice": "the tarte tatin"
+            },
+            {
+                "name": "Ringo",
+                "choice": "the Roast sirloin of Beef"
+            }
+        ]
+        self.assertEqual(expected, FinishedStep(rsvps).menu_choices())

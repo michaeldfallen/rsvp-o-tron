@@ -1,3 +1,4 @@
+from functools import reduce
 from app.db import db
 import uuid
 
@@ -20,6 +21,22 @@ class Invite(db.Model):
 
     def __repr__(self):
         return '<Invite (id {})>'.format(self.id)
+
+    def is_complete(self):
+        def has_guests():
+            return len(self.guests) != 0
+
+        def all_have_responded():
+            def are_complete(result, guest):
+                return (
+                    result and
+                    guest.rsvp is not None and
+                    not guest.rsvp.incomplete()
+                )
+
+            return reduce(are_complete, self.guests, True)
+
+        return has_guests() and all_have_responded()
 
     @staticmethod
     def all():

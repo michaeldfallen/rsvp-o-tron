@@ -9,6 +9,7 @@ class RSVP(db.Model, json.Serialisable):
     attending = db.Column(db.Boolean(), nullable=False)
     guest_id = db.Column(db.Integer, db.ForeignKey('guest.id'))
     menu_choice = db.Column(db.String)
+    name = db.Column(db.String)
 
     guest = db.relationship('Guest')
 

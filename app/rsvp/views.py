@@ -42,8 +42,9 @@ class ConfirmStep(Template):
 class FinishedStep(Template):
     title = "Thanks for RSVPing"
 
-    def __init__(self, rsvps):
+    def __init__(self, rsvps, already_finished=False):
         self.rsvps = rsvps
+        self.already_finished = already_finished
 
     def people_attending(self):
         def are_attending(o):
@@ -62,3 +63,17 @@ class FinishedStep(Template):
 
     def are_people_avoiding(self):
         return len(list(self.people_avoiding())) != 0
+
+    def menu_choices(self):
+        def readable_menu_choice(rsvp):
+            choice = ""
+            if rsvp.menu_choice == "beef":
+                choice = "the Roast sirloin of Beef"
+            elif rsvp.menu_choice == "turkey":
+                choice = "the Turkey and Ham"
+            elif rsvp.menu_choice == "vegetarian":
+                choice = "the tarte tatin"
+
+            return {"name": rsvp.name, "choice": choice}
+
+        return list(map(readable_menu_choice, self.people_attending()))
