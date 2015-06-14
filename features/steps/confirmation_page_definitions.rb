@@ -1,7 +1,7 @@
 require 'pry'
 
 Given(/^I completed my RSVP$/) do
-  step 'I have responded that I will gladly attend'
+  step 'I have responded that I will attend with bells on!'
   step 'I choose turkey for my menu choice'
 end
 
