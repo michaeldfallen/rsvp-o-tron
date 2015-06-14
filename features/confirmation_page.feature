@@ -10,7 +10,7 @@ Acceptance criteria
 Scenario: Checking my answers
     Given I have already responded
     When I enter my RSVP code
-    Then I am taken to the confirmation page
+    Then I am taken straight to the confirmation page
     And my answers are displayed
 
 Scenario: Finishing my response

@@ -7,6 +7,7 @@ class Invite(db.Model):
     __tablename__ = 'invite'
 
     id = db.Column(db.Integer, primary_key=True)
+    has_room = db.Column(db.Boolean())
     token = db.Column(db.String())
     guests = db.relationship(
         'Guest',
@@ -16,11 +17,12 @@ class Invite(db.Model):
     def __new_uuid(self):
         return uuid.uuid4().hex[:6]
 
-    def __init__(self, token=None):
+    def __init__(self, has_room=False, token=None):
+        self.has_room = has_room
         self.token = token if token is not None else self.__new_uuid()
 
     def __repr__(self):
-        return '<Invite (id {})>'.format(self.id)
+        return '<Invite (id {}, room {})>'.format(self.id, self.has_room)
 
     def is_complete(self):
         def has_guests():

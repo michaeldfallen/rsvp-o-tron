@@ -6,12 +6,19 @@
       Invite Url
     </th>
     <th>
+      Room held
+    </th>
+    <th>
       Guests
     </th>
   </tr>
   {{#invites}}
   <tr>
     <td class="token">{{token}}</td>
+    <td>
+      {{#has_room}}Yes{{/has_room}}
+      {{^has_room}}No{{/has_room}}
+    </td>
     <td>
       <table border="0">
         <tr>
