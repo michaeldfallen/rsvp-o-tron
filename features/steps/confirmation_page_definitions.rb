@@ -16,8 +16,12 @@ When(/^I enter my RSVP code$/) do
   click_button('Continue')
 end
 
-When(/^I am taken to the confirmation page$/) do
+When(/^I am taken straight to the confirmation page$/) do
   assert(current_url.end_with?("rsvp/#{@invite_id}"))
+end
+
+When(/^I am taken to the confirmation page$/) do
+  assert(current_url.end_with?("rsvp/#{@invite_id}/finished"))
 end
 
 Then(/^my answers are displayed$/) do

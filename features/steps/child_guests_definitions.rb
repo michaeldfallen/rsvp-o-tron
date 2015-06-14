@@ -32,11 +32,9 @@ When(/^I am on the menu choice page$/) do
   click_button('Continue')
   choose("I will gladly attend")
   click_button("Continue")
-  puts(current_url)
   assert(current_url.end_with?('menu-choice'))
 end
 
 Then(/^I am offered a half portion$/) do
-  puts(page.body)
   assert(page.has_content?("A half portion of", :count => 3))
 end

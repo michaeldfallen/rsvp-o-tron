@@ -117,10 +117,14 @@ def register_routes(blueprint):
             return redirect(url_for('rsvp.start'))
         else:
             rsvps = [guest.rsvp for guest in invite.guests]
-            return views.FinishedStep(rsvps, already_finished=True).render()
+            return views.FinishedStep(
+                rsvps,
+                already_finished=True,
+                has_room=invite.has_room
+            ).render()
 
     @blueprint.route('/rsvp/<token>/finished')
     def finished(token):
         invite = Invite.get(token)
         rsvps = [guest.rsvp for guest in invite.guests]
-        return views.FinishedStep(rsvps).render()
+        return views.FinishedStep(rsvps, has_room=invite.has_room).render()

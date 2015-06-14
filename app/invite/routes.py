@@ -1,5 +1,6 @@
 from flask import redirect, url_for
 from app.invite import views
+from app.invite.forms import CreateInviteForm
 from app.invite.model import Invite
 
 
@@ -11,13 +12,18 @@ def register_routes(blueprint):
 
     @blueprint.route('/invite/new')
     def create_invite_form():
-        return views.CreateInvite().render()
+        form = CreateInviteForm()
+        return views.CreateInvite(form).render()
 
     @blueprint.route('/invite/new', methods=['POST'])
     def create_invite():
-        invite = Invite()
-        Invite.save(invite)
-        return redirect(url_for('invite.list_invites'))
+        form = CreateInviteForm()
+        if form.validate_on_submit():
+            invite = Invite(has_room=form.has_room.data)
+            Invite.save(invite)
+            return redirect(url_for('invite.list_invites'))
+        else:
+            return views.CreateInvite(form).render()
 
     @blueprint.route('/invite/<token>/delete', methods=['POST'])
     @blueprint.route('/invite/<token>', methods=['DELETE'])

@@ -42,9 +42,10 @@ class ConfirmStep(Template):
 class FinishedStep(Template):
     title = "Thanks for RSVPing"
 
-    def __init__(self, rsvps, already_finished=False):
+    def __init__(self, rsvps, already_finished=False, has_room=False):
         self.rsvps = rsvps
         self.already_finished = already_finished
+        self.has_room = has_room
 
     def people_attending(self):
         def are_attending(o):
