@@ -1,12 +1,12 @@
 require 'pry'
 
 Then(/^no room message is displayed$/) do
-  assert(page.has_content?('Thank you for your response'))
+  assert(page.has_content?('Thank you for replying'))
   assert(page.has_content?('A room has been held for you') == false)
 end
 
 Then(/^a message telling me I have a room is displayed$/) do
-  assert(page.has_content?('Thank you for your response'))
+  assert(page.has_content?('Thank you for replying'))
   assert(page.has_content?('A room has been held for you'))
 end
 

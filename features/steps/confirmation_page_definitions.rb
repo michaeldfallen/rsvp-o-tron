@@ -25,5 +25,5 @@ When(/^I am taken to the confirmation page$/) do
 end
 
 Then(/^my answers are displayed$/) do
-  assert(page.has_content?("John is having the Turkey and Ham"))
+  assert(page.has_content?("The Turkey and Ham"))
 end

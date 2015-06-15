@@ -69,12 +69,18 @@ class FinishedStep(Template):
         def readable_menu_choice(rsvp):
             choice = ""
             if rsvp.menu_choice == "beef":
-                choice = "the Roast sirloin of Beef"
+                choice = "Roast sirloin of Beef"
             elif rsvp.menu_choice == "turkey":
-                choice = "the Turkey and Ham"
+                choice = "Turkey and Ham"
             elif rsvp.menu_choice == "vegetarian":
-                choice = "the tarte tatin"
+                choice = "vegetarian tarte tatin"
 
             return {"name": rsvp.name, "choice": choice}
 
         return list(map(readable_menu_choice, self.people_attending()))
+
+    def only_one_guest(self):
+        return len(list(self.people_attending())) == 1
+
+    def more_than_one_guest(self):
+        return not self.only_one_guest()
