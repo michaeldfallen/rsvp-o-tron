@@ -1,50 +1,42 @@
 <h1>{{guest.first_name}} {{guest.last_name}}</h1>
 
-<h2>We would love for you share our first dinner together</h2>
+<h2>What would you like for your main course?</h2>
 
-<h3>For starters we will have</h3>
+<label for="menu-choices">
+  For my main course I would like
+</label>
+<form class="rsvp" method="POST" id="menu-choices">
 
-<p>Confit duck leg with spicy noodles, honey, chilli and mint sauce</p>
-
-<h3>For soup we will be having</h3>
-
-<p>Garden vegetable broth</p>
-
-<h3>And dessert will be</h3>
-
-<p>Raspberry ruffle cheesecake with red berry coulis</p>
-
-<form class="rsvp" method="POST">
-  <h2>What would you like for your main course?</h2>
-
-  <label for="menu-turkey">
-    <input type="radio" id="menu-turkey" name="menu_choice" value="turkey">
+  <label for="turkey">
+    <input type="radio" id="turkey" name="menu_choice" value="turkey">
     {{#guest.is_child}}
-    A half portion of
+    A half portion of<br/>
     {{/guest.is_child}}
-    Stuffed Antrim turkey and honey roast ham,
-    garnished with chipolata sausage,
+    Stuffed Antrim turkey and honey roast ham,<br/>
+    garnished with chipolata sausage,<br/>
     cranberries and port sauce
   </label>
 
-  <label for="menu-beef">
-    <input type="radio" id="menu-beef" name="menu_choice" value="beef" />
+  <label for="beef">
+    <input type="radio" id="beef" name="menu_choice" value="beef" />
     {{#guest.is_child}}
-    A half portion of
+    A half portion of<br/>
     {{/guest.is_child}}
-    Roast prime sirloin of beef
-    with tomato, mushroom and oregano sauce
+    Roast prime sirloin of beef<br/>
+    with tomato, mushroom and oregano sauce<br/>
     or pink peppercorn sauce
   </label>
 
-  <label for="menu-veg">
-    <input type="radio" id="menu-veg" name="menu_choice" value="vegetarian" />
+  <label for="vegetarian">
+    <input type="radio" id="vegetarian" name="menu_choice" value="vegetarian" />
     {{#guest.is_child}}
-    A half portion of
+    A half portion of<br/>
     {{/guest.is_child}}
-    The vegetarian option
+    Mediterranean vegetable tarte tatin<br/>
+    with basil pesto
   </label>
 
+  <p>Please contact us with any special dietary requirements</p>
   {{{ form.csrf_token }}}
 
   <input type="submit" value="Continue" />

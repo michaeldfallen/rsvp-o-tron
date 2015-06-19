@@ -11,23 +11,23 @@ Given(/^I am invited to the wedding$/) do
   @invite_id = find('.token').text
 end
 
-When(/^I have responded that I will (gladly|resentfully) attend$/) do |feels|
+When(/^I have responded that I will attend(.*)$/) do |bells|
   visit("#{$URL}/rsvp")
   fill_in('token', :with => "#{@invite_id}")
   click_button('Continue')
   page.has_content?("You are invited to our wedding")
   click_button('Continue')
-  choose("I will #{feels} attend")
+  choose("I will be there#{bells}")
   click_button("Continue")
 end
 
-When(/^I have responded that I will not attend$/) do
+When(/^I have responded that I will not attend(.*)$/) do |bells|
   visit("#{$URL}/rsvp")
   fill_in('token', :with => "#{@invite_id}")
   click_button('Continue')
   page.has_content?("You are invited to our wedding")
   click_button('Continue')
-  choose("I regretfully decline")
+  choose("I will not be there#{bells}")
   click_button("Continue")
 end
 

@@ -1,7 +1,7 @@
 require 'pry'
 
 Given(/^I completed my RSVP$/) do
-  step 'I have responded that I will gladly attend'
+  step 'I have responded that I will attend with bells on!'
   step 'I choose turkey for my menu choice'
 end
 
@@ -25,5 +25,5 @@ When(/^I am taken to the confirmation page$/) do
 end
 
 Then(/^my answers are displayed$/) do
-  assert(page.has_content?("John is having the Turkey and Ham"))
+  assert(page.has_content?("The Turkey and Ham"))
 end

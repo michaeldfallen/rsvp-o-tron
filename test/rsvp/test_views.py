@@ -110,15 +110,15 @@ class TestViews(unittest.TestCase):
         expected = [
             {
                 "name": "John",
-                "choice": "the Turkey and Ham"
+                "choice": "Turkey and Ham"
             },
             {
                 "name": "Paul",
-                "choice": "the tarte tatin"
+                "choice": "vegetarian tarte tatin"
             },
             {
                 "name": "Ringo",
-                "choice": "the Roast sirloin of Beef"
+                "choice": "Roast sirloin of Beef"
             }
         ]
         self.assertEqual(expected, FinishedStep(rsvps).menu_choices())

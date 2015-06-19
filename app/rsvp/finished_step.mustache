@@ -3,12 +3,26 @@
   You've already responded
   {{/already_finished}}
   {{^already_finished}}
-  Thank you for your response
+  Thank you for replying!
   {{/already_finished}}
 </h1>
 {{#already_finished}}
 <p>If you'd like to change your answers just pick up a phone and call us.</p>
 {{/already_finished}}
+
+{{#are_people_avoiding}}
+<div class="avoiding">
+  <ul>
+    {{#people_avoiding}}
+    <li>{{guest.first_name}}</li>
+    {{/people_avoiding}}
+  </ul>
+  <p>
+    Sorry you can't make it
+  </p>
+</div>
+{{/are_people_avoiding}}
+
 {{#are_people_attending}}
 <div class="attending">
   <ul>
@@ -17,10 +31,15 @@
     {{/people_attending}}
   </ul>
   <p>
-    we are very pleased to hear you will be joining us
-    in celebrating our wedding.
+    we'll see you then
   </p>
   <h3>For dinner you chose</h3>
+  {{#only_one_guest}}
+    {{#menu_choices}}
+    The {{choice}}
+    {{/menu_choices}}
+  {{/only_one_guest}}
+  {{#more_than_one_guest}}
   <ul>
     {{#menu_choices}}
     <li>
@@ -30,23 +49,61 @@
     </li>
     {{/menu_choices}}
   </ul>
-  {{#has_room}}
-  <h3>A room has been held for you</h3>
-  <p>
-    Please call the Galgorm wedding team
-  </p>
-  {{/has_room}}
+  {{/more_than_one_guest}}
 </div>
 {{/are_people_attending}}
-{{#are_people_avoiding}}
-<div class="avoiding">
-  <ul>
-    {{#people_avoiding}}
-    <li>{{guest.first_name}}</li>
-    {{/people_avoiding}}
-  </ul>
+
+{{#are_people_attending}}
+{{#has_room}}
+<div class="rooms">
+  <h3>A room has been held for you</h3>
   <p>
-    we are sad to hear you will be unable to join us.
+    We have reserved a room in the hotel in your name.
+    To confirm your reservation please pay the room deposit
+    by Friday August 28<sup>th</sup>
+  </p>
+  <p>
+    Contact Galgorm reservations team on
+    <span class="tel">028 2588 1001</span>
   </p>
 </div>
-{{/are_people_avoiding}}
+{{/has_room}}
+{{/are_people_attending}}
+
+<div class="gifts">
+  <h3>The gift registry</h3>
+  <p>Not another crystal duck.</p>
+  <p>
+    We have decided not to set up a gift registry.
+    We request nothing more than your company on the day we
+    celebrate our wedding.
+  </p>
+  <p>
+    If you feel you must, we would happily accept
+    <a href="https://www.johnlewisgiftcard.com/">
+      John Lewis vouchers
+    </a>.
+  </p>
+</div>
+
+<div class="time">
+  <h3>When</h3>
+  <p>4pm in the afternoon</p>
+  <p>
+    Please take your seat and get comfortable
+    15 minutes before the ceremony begins
+    and the bride arrives.
+  </p>
+</div>
+
+<div class="location">
+  <h3>Where</h3>
+  <ul>
+    <li>The Ghost House</li>
+    <li>Galgorm Resort and Spa</li>
+    <li>136 Fenaghy Road</li>
+    <li>Galgorm, Co. Antrim</li>
+    <li>Northern Ireland</li>
+    <li>BT42 1EA</li>
+  </ul>
+</div>

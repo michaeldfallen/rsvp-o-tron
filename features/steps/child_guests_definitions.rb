@@ -30,7 +30,7 @@ When(/^I am on the menu choice page$/) do
   click_button('Continue')
   page.has_content?("You are invited to our wedding")
   click_button('Continue')
-  choose("I will gladly attend")
+  choose("I will be there with bells on!")
   click_button("Continue")
   assert(current_url.end_with?('menu-choice'))
 end
