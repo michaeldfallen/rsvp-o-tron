@@ -1,14 +1,14 @@
 <div class="invite">
-  {{#has_adults}}
   <h2 class="guests">
-    {{adult_guests}}{{#has_children}},{{/has_children}}
-    {{#has_children}}
+    {{#has_primary}}
+      {{primary_guests}}{{#has_secondary}},{{/has_secondary}}
+    {{/has_primary}}
+    {{#has_secondary}}
     <span class="children">
-      {{child_guests}}
+      {{secondary_guests}}
     </span>
-    {{/has_children}}
+    {{/has_secondary}}
   </h2>
-  {{/has_adults}}
   <h3 class="message">Please celebrate with us on our wedding day</h3>
 
   <p>at</p>

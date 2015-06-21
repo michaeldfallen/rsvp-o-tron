@@ -42,23 +42,23 @@ class Step2InviteDetails(Template):
 
         return concat_and_at_end(guest_names)
 
-    def child_guests(self):
-        def is_child(o):
-            return o.is_child is True
+    def secondary_guests(self):
+        def is_secondary(o):
+            return o.is_primary is False
 
-        return self.guest_list(is_child)
+        return self.guest_list(is_secondary)
 
-    def adult_guests(self):
-        def is_adult(o):
-            return o.is_child is False
+    def primary_guests(self):
+        def is_primary(o):
+            return o.is_primary is True
 
-        return self.guest_list(is_adult)
+        return self.guest_list(is_primary)
 
-    def has_adults(self):
-        return self.adult_guests() is not ""
+    def has_primary(self):
+        return self.primary_guests() is not ""
 
-    def has_children(self):
-        return self.child_guests() is not ""
+    def has_secondary(self):
+        return self.secondary_guests() is not ""
 
 
 class Step3Respond(Template, FormHandler):
