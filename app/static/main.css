@@ -11,20 +11,24 @@ main {
 
 @media (max-width: 350px) {
   .big-page header { font-size: 35px; }
+  header { font-size: 36px; }
 }
 
 @media (min-width: 350px)
   and (max-width: 450px) {
   .big-page header { font-size: 40px; }
+  header { font-size: 36px; }
 }
 
 @media (min-width: 450px)
   and (max-width: 575px) {
   .big-page header { font-size: 50px; }
+  header { font-size: 36px; }
 }
 
 @media (min-width: 575px) {
   .big-page header { font-size: 70px; }
+  header { font-size: 36px; }
 }
 
 .big-page header {
@@ -32,6 +36,7 @@ main {
 }
 
 header {
+  padding-top: 20px;
   line-height: 1;
   font-weight: 500;
 }
@@ -60,6 +65,7 @@ header span.michael {
 }
 
 .strike {
+  padding-top: 20px;
   border-bottom: 1px solid #906246;
   text-align: center;
   height: 0px;
@@ -124,4 +130,17 @@ input[type=submit]:active {
     box-shadow: none;
     margin-bottom: -3px;
     margin-top: 3px;
+}
+
+.guests {
+  font-family: "Bilbo";
+  font-size: 4em;
+}
+
+.guests .children {
+  font-size: 0.75em;
+}
+
+.message {
+  font-family: "Dancing Script";
 }
