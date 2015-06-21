@@ -1,5 +1,6 @@
 from app.views.template import Template
 from app.forms import FormHandler
+from itertools import groupby
 
 
 class Step1Start(Template, FormHandler):
@@ -14,6 +15,50 @@ class Step2InviteDetails(Template):
 
     def __init__(self, invite):
         self.invite = invite
+
+    def guest_list(self, pred=lambda x: x):
+        def last_name(o):
+            return o.last_name
+
+        def guest_name(guest):
+            return guest.first_name
+
+        def concat_and_at_end(l):
+            first_n = ", ".join(l[:-1])
+            last = "".join(l[-1:])
+            all_not_empty = filter(None, [first_n, last])
+            return " and ".join(all_not_empty)
+
+        def concat_family(family_name, guests):
+            names = list(map(guest_name, guests))
+            return concat_and_at_end(names) + " " + family_name
+
+        filtered = filter(pred, self.invite.guests)
+
+        sorted_names = sorted(filtered, key=last_name)
+
+        families = groupby(sorted_names, last_name)
+        guest_names = list(map(lambda x: concat_family(*x), families))
+
+        return concat_and_at_end(guest_names)
+
+    def child_guests(self):
+        def is_child(o):
+            return o.is_child is True
+
+        return self.guest_list(is_child)
+
+    def adult_guests(self):
+        def is_adult(o):
+            return o.is_child is False
+
+        return self.guest_list(is_adult)
+
+    def has_adults(self):
+        return self.adult_guests() is not ""
+
+    def has_children(self):
+        return self.child_guests() is not ""
 
 
 class Step3Respond(Template, FormHandler):

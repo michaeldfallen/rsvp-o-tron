@@ -38,9 +38,9 @@ class TestRoutes(unittest.TestCase):
         res = client.post('/rsvp', data={'token': 'shouldfail'})
         html = document_fromstring(res.get_data())
         self.assertEqual(res.status_code, 200)
-        self.assertEqual(
-            html.xpath("//div[@class='error']/text()"),
-            ["We couldn't find your invitation"]
+        self.assertIn(
+            "We couldn't find your invitation",
+            html.xpath("//div[contains(@class, 'error')]/text()")
         )
 
     @with_context

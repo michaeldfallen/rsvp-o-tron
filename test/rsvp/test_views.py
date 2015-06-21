@@ -21,22 +21,33 @@ class TestViews(unittest.TestCase):
         )
 
     @with_context
-    def test_step2_invite_details(self):
+    def test_step2_guest_names(self):
         invite = Invite()
         invite.id = 123456789
         joe = Guest('Joe', 'Smith', invite.id)
         joe.id = 1
         jane = Guest('Jane', 'Smith', invite.id)
         jane.id = 2
+        jim = Guest('Jim', 'Smith', invite.id)
+        jim.id = 3
+        john = Guest('John', 'Jones', invite.id)
+        john.id = 4
+
+        invite.guests = [joe]
+        names = Step2InviteDetails(invite).guest_list()
+        self.assertEqual(names, "Joe Smith")
+
         invite.guests = [joe, jane]
+        names = Step2InviteDetails(invite).guest_list()
+        self.assertEqual(names, "Joe and Jane Smith")
 
-        page = Step2InviteDetails(invite)
+        invite.guests = [joe, jane, jim]
+        names = Step2InviteDetails(invite).guest_list()
+        self.assertEqual(names, "Joe, Jane and Jim Smith")
 
-        html = document_fromstring(page.render())
-        self.assertEqual(
-            html.xpath('//li[@class="guest"]/text()'),
-            ['Joe Smith', 'Jane Smith']
-        )
+        invite.guests = [joe, jane, jim, john]
+        names = Step2InviteDetails(invite).guest_list()
+        self.assertEqual(names, "John Jones and Joe, Jane and Jim Smith")
 
     @with_context
     def test_finished_step(self):
