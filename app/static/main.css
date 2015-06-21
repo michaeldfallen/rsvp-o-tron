@@ -47,13 +47,13 @@ header span {
 }
 
 header span.mags {
-  bottom: 0.7em;
-  margin-right: -0.4em;
+  bottom: 0.56em;
+  margin-right: -0.3em;
 }
 
 header span.and {
   color: #d29ea9;
-  font-size: 1.7em;
+  font-size: 1.5em;
 }
 
 header span.michael {
@@ -66,16 +66,25 @@ header span.michael {
 
 .strike {
   padding-top: 20px;
-  border-bottom: 1px solid #906246;
+  border-bottom: 2px solid #906246;
   text-align: center;
   height: 0px;
 }
 
 .strike-date {
+  font-size: 18px;
   padding: 0 10px;
   position: relative;
-  top: -10px;
+  top: -12px;
   background-color: #f3f3f3;
+}
+
+.heart {
+  top: -6px;
+  position: relative;
+  color: #da9ea9;
+  background-color: #f3f3f3;
+  padding: 0 10px;
 }
 
 .col-centered{
@@ -91,6 +100,12 @@ header span.michael {
 
 form {
   padding-top:40px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 
@@ -135,6 +150,7 @@ input[type=submit]:active {
 .guests {
   font-family: "Bilbo";
   font-size: 4em;
+  padding-top: 32px;
 }
 
 .guests .children {
@@ -143,4 +159,5 @@ input[type=submit]:active {
 
 .message {
   font-family: "Dancing Script";
+  font-size: 32px;
 }
