@@ -52,3 +52,52 @@ header span.and {
   float: none;
   margin: 0 auto;
 }
+
+.error {
+  border-left: 5px solid #AB4D52;
+  font-weight: 500;
+  padding: 10px;
+}
+
+form {
+  padding-top:40px;
+}
+
+
+/*Buttons*/
+
+input[type=submit] {
+    padding: 14px 24px;
+    border: 0 none;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 4px;
+}
+
+input[type=submit]:focus,
+input[type=submit]:active:focus,
+input[type=submit].active:focus {
+    outline: 0 none;
+}
+
+input[type=submit] {
+    background: #C09378;
+    color: #ffffff;
+    box-shadow: 0 3px 0 0 #906246;
+}
+
+input[type=submit]:hover,
+input[type=submit]:focus,
+input[type=submit]:active {
+    color: #ffffff;
+    background: #C09378;
+}
+
+input[type=submit]:active {
+    color: #ffffff;
+    background: #C09378;
+    box-shadow: none;
+    margin-bottom: -3px;
+    margin-top: 3px;
+}
