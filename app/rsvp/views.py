@@ -5,6 +5,7 @@ from itertools import groupby
 
 class Step1Start(Template, FormHandler):
     title = "Hello, Guest!"
+    page_type = "big-page"
 
     def __init__(self, form):
         self.form = form

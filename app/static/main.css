@@ -9,42 +9,66 @@ main {
   height: 100%;
 }
 
-header {
-  font-weight: 500;
-  height: 80px;
+@media (max-width: 350px) {
+  .big-page header { font-size: 35px; }
 }
 
-header div {
-  height: 100%;
-  min-height: 100%;
+@media (min-width: 350px)
+  and (max-width: 450px) {
+  .big-page header { font-size: 40px; }
+}
+
+@media (min-width: 450px)
+  and (max-width: 575px) {
+  .big-page header { font-size: 50px; }
+}
+
+@media (min-width: 575px) {
+  .big-page header { font-size: 70px; }
+}
+
+.big-page header {
+  padding-top: 40px;
+}
+
+header {
+  line-height: 1;
+  font-weight: 500;
 }
 
 header span {
   position: relative;
   display: inline-block;
-  font-size: 40px;
 }
 
 header span.mags {
-  bottom: 28px;
-  margin-right: -8px;
+  bottom: 0.7em;
+  margin-right: -0.4em;
 }
 
 header span.and {
   color: #d29ea9;
-  font-size: 70px;
-  padding-right: -5px;
+  font-size: 1.7em;
+}
+
+header span.michael {
+  margin-left: -0.2em;
+}
+
+.big-page .strike {
+  padding-top: 40px;
 }
 
 .strike {
   border-bottom: 1px solid #906246;
   text-align: center;
+  height: 0px;
 }
 
 .strike-date {
   padding: 0 10px;
   position: relative;
-  top: 10px;
+  top: -10px;
   background-color: #f3f3f3;
 }
 

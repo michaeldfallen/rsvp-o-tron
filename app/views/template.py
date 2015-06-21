@@ -3,6 +3,7 @@ from flask_stache import render_view
 
 
 class Template(object):
+    page_type = ""
 
     """
     Inherit this class to be able to render a template
@@ -21,6 +22,7 @@ class Template(object):
         """
         if sub_template is not None:
             self.title = sub_template.title
+            self.page_type = sub_template.page_type
             self.main_css = url_for('static', filename='main.css')
             self.content = render_view(sub_template)
 
