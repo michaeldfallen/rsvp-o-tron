@@ -24,6 +24,7 @@
         <tr>
           <th>Name</th>
           <th>Adult/Child</th>
+          <th>Primary/Secondary</th>
           <th>Response</th>
           <th>Dinner choice</th>
           <th>Actions</th>
@@ -37,6 +38,12 @@
           {{^is_child}}
             <td>Adult</td>
           {{/is_child}}
+          {{#is_primary}}
+            <td>Primary</td>
+          {{/is_primary}}
+          {{^is_primary}}
+            <td>Secondary</td>
+          {{/is_primary}}
           {{#rsvp}}
           {{#attending}}<td>Attending</td>{{/attending}}
           {{^attending}}<td>Not Attending</td>{{/attending}}
