@@ -9,6 +9,7 @@ class Guest(db.Model):
     last_name = db.Column(db.String())
     invite_id = db.Column(db.Integer, db.ForeignKey('invite.id'))
     is_child = db.Column(db.Boolean())
+    is_primary = db.Column(db.Boolean())
 
     invite = db.relationship('Invite')
     rsvp = db.relationship('RSVP', uselist=False, backref='guest_rsvp')
@@ -18,11 +19,13 @@ class Guest(db.Model):
             first_name,
             last_name,
             invite_id,
-            is_child=False):
+            is_child=False,
+            is_primary=True):
         self.first_name = first_name
         self.last_name = last_name
         self.is_child = is_child
         self.invite_id = invite_id
+        self.is_primary = is_primary
 
     def __repr__(self):
         return '<Guest(id {}, name {}{}, invite {}, child {})>'.format(

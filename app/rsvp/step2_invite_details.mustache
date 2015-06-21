@@ -1,14 +1,15 @@
 <div class="invite">
-  <h1>Mags Savage and Michael Allen</h1>
-  <h2>
-    Are pleased to invite
-    <ul>
-      {{#invite.guests}}
-      <li class="guest">{{first_name}} {{last_name}}</li>
-      {{/invite.guests}}
-    </ul>
-    to the celebration of their wedding
+  <h2 class="guests">
+    {{#has_primary}}
+      {{primary_guests}}{{#has_secondary}},{{/has_secondary}}
+    {{/has_primary}}
+    {{#has_secondary}}
+    <span class="children">
+      {{secondary_guests}}
+    </span>
+    {{/has_secondary}}
   </h2>
+  <h3 class="message">Please celebrate with us on our wedding day</h3>
 
   <p>at</p>
 

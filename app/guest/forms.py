@@ -6,3 +6,4 @@ class AddGuestForm(Form):
     first_name = TextField('first_name', [validators.DataRequired()])
     last_name = TextField('last_name', [validators.DataRequired()])
     is_child = BooleanField('is_child')
+    is_secondary = BooleanField('is_secondary')
