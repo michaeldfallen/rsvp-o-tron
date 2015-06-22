@@ -98,10 +98,6 @@ header span.michael {
   padding: 10px;
 }
 
-form {
-  padding-top:40px;
-}
-
 ul {
   list-style: none;
   padding: 0;
@@ -111,6 +107,7 @@ ul {
 
 /*Buttons*/
 
+.button,
 input[type=submit] {
     padding: 14px 24px;
     border: 0 none;
@@ -120,18 +117,24 @@ input[type=submit] {
     border-radius: 4px;
 }
 
+.button:focus,
+.button:active:focus,
 input[type=submit]:focus,
 input[type=submit]:active:focus,
 input[type=submit].active:focus {
     outline: 0 none;
 }
 
+.button,
 input[type=submit] {
     background: #C09378;
     color: #ffffff;
     box-shadow: 0 3px 0 0 #906246;
 }
 
+.button:hover,
+.button:focus,
+.button:active,
 input[type=submit]:hover,
 input[type=submit]:focus,
 input[type=submit]:active {
@@ -139,12 +142,19 @@ input[type=submit]:active {
     background: #C09378;
 }
 
+.button:active,
 input[type=submit]:active {
     color: #ffffff;
     background: #C09378;
     box-shadow: none;
     margin-bottom: -3px;
     margin-top: 3px;
+}
+
+.button.btn-xs,
+input[type=submit].btn-xs {
+  padding: 4px;
+  font-size: 12px;
 }
 
 .guests {
@@ -160,4 +170,8 @@ input[type=submit]:active {
 .message {
   font-family: "Dancing Script";
   font-size: 32px;
+}
+
+.control-row {
+  margin: 10px 0;
 }

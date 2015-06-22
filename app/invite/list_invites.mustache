@@ -1,74 +1,70 @@
-<h1>All Invites</h1>
-<a href="/invite/new">Create new invite</a>
-<table>
-  <tr>
-    <th>
-      Invite Url
-    </th>
-    <th>
-      Room held
-    </th>
-    <th>
-      Guests
-    </th>
-  </tr>
-  {{#invites}}
-  <tr>
-    <td class="token">{{token}}</td>
-    <td>
-      {{#has_room}}Yes{{/has_room}}
-      {{^has_room}}No{{/has_room}}
-    </td>
-    <td>
-      <table border="0">
+<div class="row">
+  <div class="col-sm-6">
+    <h2>All Invites</h2>
+  </div>
+</div>
+<div class="row control-row">
+  <div class="col-sm-6 ">
+    <a href="/invite/new" class="button btn-xs">Create new invite</a>
+  </div>
+</div>
+
+{{#invites}}
+<div class="strike control-row"></div>
+<div class="row">
+  <div class="col-sm-3">
+    <b>Token</b><br />
+    {{token}}
+  </div>
+  <div class="col-sm-3">
+    <b>Room Held</b><br />
+    {{#has_room}}Yes{{/has_room}}
+    {{^has_room}}No{{/has_room}}
+  </div>
+  <div class="col-sm-3 text-right">
+    <form method="GET" action="/invite/{{token}}/guest/new">
+      <input type="submit" value="Add Guest" class="btn-xs" />
+    </form>
+  </div>
+  <div class="col-sm-3 text-right">
+    <form method="POST" action="/invite/{{token}}/delete">
+      <input type="submit" value="Delete Invite" class="btn-xs"/>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+      <table border="0" class="table">
         <tr>
           <th>Name</th>
-          <th>Adult/Child</th>
-          <th>Primary/Secondary</th>
+          <th>Type</th>
           <th>Response</th>
-          <th>Dinner choice</th>
           <th>Actions</th>
         </tr>
         {{#guests}}
         <tr>
           <td>{{first_name}} {{last_name}}</td>
-          {{#is_child}}
-            <td>Child Guest</td>
-          {{/is_child}}
-          {{^is_child}}
-            <td>Adult</td>
-          {{/is_child}}
-          {{#is_primary}}
-            <td>Primary</td>
-          {{/is_primary}}
-          {{^is_primary}}
-            <td>Secondary</td>
-          {{/is_primary}}
-          {{#rsvp}}
-          {{#attending}}<td>Attending</td>{{/attending}}
-          {{^attending}}<td>Not Attending</td>{{/attending}}
-          <td>{{menu_choice}}</td>
-          {{/rsvp}}
-          {{^rsvp}}
-            <td>Not responded yet</td><td></td>
-          {{/rsvp}}
+          <td>
+            {{#is_child}}Child Guest{{/is_child}}
+            {{^is_child}}Adult{{/is_child}}
+            {{#is_primary}}Primary{{/is_primary}}
+            {{^is_primary}}Secondary{{/is_primary}}
+          </td>
+          <td>
+            {{#rsvp}}
+            {{#attending}}Attending - {{menu_choice}}{{/attending}}
+            {{^attending}}Not Attending{{/attending}}
+            {{/rsvp}}
+            {{^rsvp}}Not responded yet{{/rsvp}}
+          </td>
           <td>
             <form method="POST" action="/invite/{{token}}/guest/{{id}}/delete">
-              <input type="submit" value="Delete Guest" />
+              <input type="submit" value="Delete Guest" class="btn-xs"/>
             </form>
           </td>
         </tr>
         {{/guests}}
       </table>
-      <form method="GET" action="/invite/{{token}}/guest/new">
-        <input type="submit" value="Add Guest" />
-      </form>
-    </td>
-    <td>
-      <form method="POST" action="/invite/{{token}}/delete">
-        <input type="submit" value="Delete Invite" />
-      </form>
-    </td>
-  </tr>
-  {{/invites}}
-</table>
+  </div>
+</div>
+{{/invites}}
