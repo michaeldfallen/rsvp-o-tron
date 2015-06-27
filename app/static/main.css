@@ -195,3 +195,30 @@ input[type=submit].btn-xs {
   position: absolute;
   bottom: 0px;
 }
+
+label.radio-label {
+  display: block;
+  margin: 10px 0;
+  border: 2px solid #E5C1AC;
+  border-radius: 4px;
+  font-weight: 400;
+  background-color: #f3f3f3;
+  padding: 1em 1em 1em 4em;
+  position: relative;
+}
+
+label.radio-label.checked,
+input:checked + label.radio-label {
+  background-color: #f6f6f6;
+  border: 2px solid #954859;
+}
+
+label.radio-label input,
+label.radio-label .iradio_square-pink {
+  position: absolute;
+  left: 1.3em;
+}
+
+.rsvp input[type=submit] {
+  margin: 20px 0;
+}

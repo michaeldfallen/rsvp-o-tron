@@ -24,6 +24,9 @@ class Template(object):
             self.title = sub_template.title
             self.page_type = sub_template.page_type
             self.main_css = url_for('static', filename='main.css')
+            self.main_js = url_for('static', filename='main.js')
+            self.icheck = url_for('static', filename='icheck.min.js')
+            self.icheck_theme = url_for('static', filename='pink.css')
             self.content = render_view(sub_template)
 
     def render(self):

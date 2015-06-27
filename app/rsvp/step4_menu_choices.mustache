@@ -1,23 +1,25 @@
-<h1>{{guest.first_name}} {{guest.last_name}}</h1>
+<h2 class="guests">{{guest.first_name}} {{guest.last_name}}</h2>
 
-<h2>What would you like for your main course?</h2>
+<h3>What would you like for your main course?</h3>
 
-<label for="menu-choices">
-  For my main course I would like
-</label>
-<form class="rsvp" method="POST" id="menu-choices">
-
-  <label for="turkey">
-    <input type="radio" id="turkey" name="menu_choice" value="turkey">
-    {{#guest.is_child}}
-    A half portion of<br/>
-    {{/guest.is_child}}
-    Stuffed Antrim turkey and honey roast ham,<br/>
-    garnished with chipolata sausage,<br/>
-    cranberries and port sauce
+<form class="rsvp form-horizontal" method="POST" id="menu-choices">
+  <label for="menu-choices">
+    For my main course I would like
   </label>
 
-  <label for="beef">
+  <label class="radio-label" for="turkey">
+    <input type="radio" id="turkey" name="menu_choice" value="turkey">
+    <span>
+      {{#guest.is_child}}
+      A half portion of<br/>
+      {{/guest.is_child}}
+      Stuffed Antrim turkey and honey roast ham,<br/>
+      garnished with chipolata sausage,<br/>
+      cranberries and port sauce
+    </span>
+  </label>
+
+  <label class="radio-label" for="beef">
     <input type="radio" id="beef" name="menu_choice" value="beef" />
     {{#guest.is_child}}
     A half portion of<br/>
@@ -27,7 +29,7 @@
     or pink peppercorn sauce
   </label>
 
-  <label for="vegetarian">
+  <label class="radio-label" for="vegetarian">
     <input type="radio" id="vegetarian" name="menu_choice" value="vegetarian" />
     {{#guest.is_child}}
     A half portion of<br/>
