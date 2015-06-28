@@ -1,26 +1,28 @@
-<h1>{{guest.first_name}} {{guest.last_name}}</h1>
+<h2 class="guests">{{guest.first_name}} </h2>
 
-<form class="rsvp" method="POST">
+<form class="rsvp form-horizontal" method="POST" id="form">
 
-  <h2>Will you be joining us in celebration?</h2>
+  <label for="form">
+    <h3>Will you be attending?</h3>
+  </label>
 
-  <label for="bells-attend">
+  <label class="radio-label" for="bells-attend">
     <input type="radio" id="bells-attend" name="attending" value="true">
     I will be there with bells on!
   </label>
-  <label for="no-bells-attend">
+  <label class="radio-label" for="no-bells-attend">
     <input type="radio" id="no-bells-attend" name="attending" value="true">
     I will be there, free of bells
   </label>
-  <label for="undecided-attend">
+  <label class="radio-label" for="undecided-attend">
     <input type="radio" id="undecided-attend" name="attending" value="true">
     I will be there, undecided on bells
   </label>
-  <label for="bells-decline">
+  <label class="radio-label" for="bells-decline">
     <input type="radio" id="bells-decline" name="attending" value="false">
     I will not be there... I heard there would be people with bells
   </label>
-  <label for="regardless-decline">
+  <label class="radio-label" for="regardless-decline">
     <input type="radio" id="regardless-decline" name="attending" value="false">
     I will not be there regardless of the bells controversy
   </label>

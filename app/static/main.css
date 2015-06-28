@@ -1,0 +1,233 @@
+body {
+  min-width: 330px;
+  background-color: #d29ea9;
+  background-image: url('/static/d471e992.png');
+}
+
+main {
+  background-color: #f6f6f6;
+  min-height: 100% !important;
+}
+
+@media (max-width: 350px) {
+  .big-page header { font-size: 35px; }
+  header { font-size: 36px; }
+}
+
+@media (min-width: 350px)
+  and (max-width: 450px) {
+  .big-page header { font-size: 40px; }
+  header { font-size: 36px; }
+}
+
+@media (min-width: 450px)
+  and (max-width: 575px) {
+  .big-page header { font-size: 50px; }
+  header { font-size: 36px; }
+}
+
+@media (min-width: 575px) {
+  .big-page header { font-size: 70px; }
+  header { font-size: 36px; }
+}
+
+.big-page header {
+  padding-top: 40px;
+}
+
+header {
+  padding-top: 20px;
+  line-height: 1;
+  font-weight: 500;
+}
+
+header span {
+  position: relative;
+  display: inline-block;
+}
+
+header span.mags {
+  bottom: 0.56em;
+  margin-right: -0.3em;
+}
+
+header span.and {
+  color: #d29ea9;
+  font-size: 1.5em;
+}
+
+header span.michael {
+  margin-left: -0.2em;
+}
+
+.big-page .strike {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.strike {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #906246;
+  text-align: center;
+  height: 0px;
+}
+
+.strike-date {
+  font-size: 18px;
+  padding: 0 10px;
+  position: relative;
+  top: -12px;
+  background-color: #f3f3f3;
+}
+
+.heart {
+  top: -6px;
+  position: relative;
+  color: #da9ea9;
+  background-color: #f3f3f3;
+  padding: 0 10px;
+}
+
+.col-centered{
+  float: none;
+  margin: 0 auto;
+}
+
+.error {
+  border-left: 5px solid #AB4D52;
+  font-weight: 500;
+  padding: 10px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+/*Buttons*/
+
+.button,
+input[type=submit] {
+    padding: 14px 24px;
+    border: 0 none;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 4px;
+}
+
+.button:focus,
+.button:active:focus,
+input[type=submit]:focus,
+input[type=submit]:active:focus,
+input[type=submit].active:focus {
+    outline: 0 none;
+}
+
+.button,
+input[type=submit] {
+    background: #C09378;
+    color: #ffffff;
+    box-shadow: 0 3px 0 0 #906246;
+}
+
+.button:hover,
+.button:focus,
+.button:active,
+input[type=submit]:hover,
+input[type=submit]:focus,
+input[type=submit]:active {
+    color: #ffffff;
+    background: #C09378;
+}
+
+.button:active,
+input[type=submit]:active {
+    color: #ffffff;
+    background: #C09378;
+    box-shadow: none;
+    margin-bottom: -3px;
+    margin-top: 3px;
+}
+
+.button.btn-xs,
+input[type=submit].btn-xs {
+  padding: 4px;
+  font-size: 12px;
+}
+
+.guests {
+  font-family: "Bilbo";
+  font-size: 4em;
+  padding-top: 32px;
+}
+
+.guests.guests-smaller {
+  font-size: 2em;
+}
+
+.guests .children {
+  font-size: 0.75em;
+}
+
+.message {
+  font-family: "Dancing Script";
+  font-size: 32px;
+}
+
+.control-row {
+  margin: 10px 0;
+}
+
+.invite-details {
+  padding-top: 1em;
+  font-size: 1.25em;
+}
+
+.label-details {
+  font-weight: 700;
+}
+
+.where-details {
+  font-family: "Elsie";
+}
+
+.footer {
+  height: 100%;
+  position: absolute;
+  bottom: 0px;
+}
+
+label.radio-label {
+  display: block;
+  margin: 10px 0;
+  border: 2px solid #E5C1AC;
+  border-radius: 4px;
+  font-weight: 400;
+  background-color: #f3f3f3;
+  padding: 1em 1em 1em 4em;
+  position: relative;
+}
+
+label.radio-label.checked,
+input:checked + label.radio-label {
+  background-color: #f6f6f6;
+  border: 2px solid #954859;
+}
+
+label.radio-label input,
+label.radio-label .iradio_square-pink {
+  position: absolute;
+  left: 1.3em;
+}
+
+.rsvp input[type=submit] {
+  margin: 20px 0;
+}
+
+form p {
+  margin-top: 20px;
+}

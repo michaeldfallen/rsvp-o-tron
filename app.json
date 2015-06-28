@@ -1,0 +1,12 @@
+{
+  "name":"rsvp-o-tron",
+  "scripts":{},
+  "env":{
+    "SECRET_KEY":{
+      "required":true
+    }
+  },
+  "addons":[
+    "heroku-postgresql"
+  ]
+}
