@@ -1,9 +1,19 @@
-<h2 class="guests">{{guest.first_name}} {{guest.last_name}}</h2>
+<h2 class="guests">{{guest.first_name}}</h2>
 
 
 <form class="rsvp form-horizontal" method="POST" id="menu-choices">
   <label for="menu-choices">
     <h3>What would you like for your main course?</h3>
+  </label>
+
+  <label class="radio-label" for="beef">
+    <input type="radio" id="beef" name="menu_choice" value="beef" />
+    {{#guest.is_child}}
+    A half portion of<br/>
+    {{/guest.is_child}}
+    Roast prime sirloin of beef<br/>
+    with tomato, mushroom and oregano sauce<br/>
+    or pink peppercorn sauce
   </label>
 
   <label class="radio-label" for="turkey">
@@ -18,16 +28,6 @@
     </span>
   </label>
 
-  <label class="radio-label" for="beef">
-    <input type="radio" id="beef" name="menu_choice" value="beef" />
-    {{#guest.is_child}}
-    A half portion of<br/>
-    {{/guest.is_child}}
-    Roast prime sirloin of beef<br/>
-    with tomato, mushroom and oregano sauce<br/>
-    or pink peppercorn sauce
-  </label>
-
   <label class="radio-label" for="vegetarian">
     <input type="radio" id="vegetarian" name="menu_choice" value="vegetarian" />
     {{#guest.is_child}}
@@ -37,7 +37,7 @@
     with basil pesto
   </label>
 
-  <p>Please contact us with any special dietary requirements</p>
+  <p>Please contact us if you have any special dietary requirements</p>
   {{{ form.csrf_token }}}
 
   <input type="submit" value="Continue" />

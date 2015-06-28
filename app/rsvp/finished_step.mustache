@@ -1,42 +1,51 @@
-<h1>
-  {{#already_finished}}
-  You've already responded
-  {{/already_finished}}
-  {{^already_finished}}
-  Thank you for replying!
-  {{/already_finished}}
-</h1>
 {{#already_finished}}
-<p>If you'd like to change your answers just pick up a phone and call us.</p>
+<h1>
+  You've already responded
+</h1>
+<p>If you'd like to change your answers just call us.</p>
 {{/already_finished}}
 
 {{#are_people_avoiding}}
-<div class="avoiding">
-  <ul>
-    {{#people_avoiding}}
-    <li>{{guest.first_name}}</li>
-    {{/people_avoiding}}
-  </ul>
-  <p>
-    Sorry you can't make it
-  </p>
+<div class="avoiding text-center row">
+  <div class="col-sm-12">
+  <h3>
+    <span class="guests guests-smaller">
+      {{guest_names_avoiding}}
+    </span>
+    <p>
+      Thank you for taking the time to respond, we're sorry to hear you can't make it.
+    </p>
+  </h3>
+  </div>
 </div>
 {{/are_people_avoiding}}
 
 {{#are_people_attending}}
-<div class="attending">
-  <ul>
-    {{#people_attending}}
-    <li>{{guest.first_name}}</li>
-    {{/people_attending}}
-  </ul>
-  <p>
-    we'll see you then
-  </p>
+<div class="attending text-center row">
+  <div class="col-sm-12">
+  <h3>
+    <span class="guests guests-smaller">
+    {{guest_names_attending}}
+    </span>
+    <p>
+      We'll see you there.
+    </p>
+  </h3>
+  </div>
+</div>
+
+<div class="row">
+  <span class="col-sm-6 col-sm-offset-3 strike">
+    <i class="fa fa-heart heart"></i>
+  </span>
+</div>
+
+<div class="row">
+  <div class="col-sm-12 text-center">
   <h3>For dinner you chose</h3>
   {{#only_one_guest}}
     {{#menu_choices}}
-    The {{choice}}
+    {{choice}}
     {{/menu_choices}}
   {{/only_one_guest}}
   {{#more_than_one_guest}}
@@ -50,12 +59,51 @@
     {{/menu_choices}}
   </ul>
   {{/more_than_one_guest}}
+  </div>
 </div>
 {{/are_people_attending}}
 
 {{#are_people_attending}}
+<div class="row">
+  <div class="time col-sm-6 text-right">
+    <h3>When</h3>
+    <span class="where-details">
+      <p>4 o'clock in the afternoon</p>
+      <p>September 26<sup>th</sup> 2015</p>
+      <p>
+        Please take your seat
+        10 minutes before the ceremony begins.
+      </p>
+    </span>
+  </div>
+
+  <div class="location col-sm-6">
+    <h3>Where</h3>
+    <ul class="where-details">
+      <li>The Ghost House</li>
+      <li>Galgorm Resort and Spa</li>
+      <li>136 Fenaghy Road</li>
+      <li>Galgorm, Co. Antrim</li>
+      <li>Northern Ireland</li>
+      <li>BT42 1EA</li>
+    </ul>
+    <p>
+      <a href="https://www.google.co.uk/maps/place/Galgorm+Resort+%26+Spa,+136+Fenaghy+Rd,+Cullybackey,+Ballymena,+County+Antrim+BT42+1EA/@54.8754844,-6.3428185,17z/">
+        Google Maps
+      </a>
+    </p>
+  </div>
+</div>
+
+<div class="row">
+  <span class="col-sm-6 col-sm-offset-3 strike">
+    <i class="fa fa-heart heart"></i>
+  </span>
+</div>
+
 {{#has_room}}
-<div class="rooms">
+<div class="rooms row">
+  <div class="col-sm-12">
   <h3>A room has been held for you</h3>
   <p>
     We have reserved a room in the hotel in your name.
@@ -66,13 +114,12 @@
     Contact Galgorm reservations team on
     <span class="tel">028 2588 1001</span>
   </p>
+  </div>
 </div>
 {{/has_room}}
-{{/are_people_attending}}
 
 <div class="gifts">
-  <h3>The gift registry</h3>
-  <p>Not another crystal duck.</p>
+  <h3>Not another crystal duck</h3>
   <p>
     We have decided not to set up a gift registry.
     We request nothing more than your company on the day we
@@ -85,25 +132,4 @@
     </a>.
   </p>
 </div>
-
-<div class="time">
-  <h3>When</h3>
-  <p>4pm in the afternoon</p>
-  <p>
-    Please take your seat and get comfortable
-    15 minutes before the ceremony begins
-    and the bride arrives.
-  </p>
-</div>
-
-<div class="location">
-  <h3>Where</h3>
-  <ul>
-    <li>The Ghost House</li>
-    <li>Galgorm Resort and Spa</li>
-    <li>136 Fenaghy Road</li>
-    <li>Galgorm, Co. Antrim</li>
-    <li>Northern Ireland</li>
-    <li>BT42 1EA</li>
-  </ul>
-</div>
+{{/are_people_attending}}

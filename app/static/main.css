@@ -1,10 +1,11 @@
 body {
   min-width: 330px;
   background-color: #d29ea9;
+  background-image: url('/static/d471e992.png');
 }
 
 main {
-  background-color: #f3f3f3;
+  background-color: #f6f6f6;
   min-height: 100% !important;
 }
 
@@ -164,6 +165,10 @@ input[type=submit].btn-xs {
   padding-top: 32px;
 }
 
+.guests.guests-smaller {
+  font-size: 2em;
+}
+
 .guests .children {
   font-size: 0.75em;
 }
@@ -221,4 +226,8 @@ label.radio-label .iradio_square-pink {
 
 .rsvp input[type=submit] {
   margin: 20px 0;
+}
+
+form p {
+  margin-top: 20px;
 }

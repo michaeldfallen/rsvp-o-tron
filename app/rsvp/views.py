@@ -93,6 +93,40 @@ class FinishedStep(Template):
         self.already_finished = already_finished
         self.has_room = has_room
 
+    def guest_list(self, pred=lambda x: x):
+        def last_name(o):
+            return o.last_name
+
+        def guest_name(guest):
+            return guest.first_name
+
+        def concat_and_at_end(l):
+            first_n = ", ".join(l[:-1])
+            last = "".join(l[-1:])
+            all_not_empty = filter(None, [first_n, last])
+            return " and ".join(all_not_empty)
+
+        def concat_family(family_name, guests):
+            names = list(map(guest_name, guests))
+            return concat_and_at_end(names) + " " + family_name
+
+        guests = list(map(lambda x: x.guest, self.rsvps))
+
+        filtered = filter(pred, guests)
+
+        sorted_names = sorted(filtered, key=last_name)
+
+        families = groupby(sorted_names, last_name)
+        guest_names = list(map(lambda x: concat_family(*x), families))
+
+        return concat_and_at_end(guest_names)
+
+    def guest_names_avoiding(self):
+        return self.guest_list(lambda o: not o.rsvp.attending)
+
+    def guest_names_attending(self):
+        return self.guest_list(lambda o: o.rsvp.attending)
+
     def people_attending(self):
         def are_attending(o):
             return o.attending
@@ -115,11 +149,11 @@ class FinishedStep(Template):
         def readable_menu_choice(rsvp):
             choice = ""
             if rsvp.menu_choice == "beef":
-                choice = "Roast sirloin of Beef"
+                choice = "Roast sirloin of beef"
             elif rsvp.menu_choice == "turkey":
-                choice = "Turkey and Ham"
+                choice = "Stuffed turkey and ham"
             elif rsvp.menu_choice == "vegetarian":
-                choice = "vegetarian tarte tatin"
+                choice = "Vegetable tarte tatin"
 
             return {"name": rsvp.name, "choice": choice}
 
