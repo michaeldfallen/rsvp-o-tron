@@ -30,7 +30,7 @@ def __menu_choice_or_continue(current_rsvp, rsvpset, token):
 
 
 def register_routes(blueprint):
-    @blueprint.route('/rsvp')
+    @blueprint.route('/')
     def start():
         form = FindInviteForm()
         return views.Step1Start(form).render()
