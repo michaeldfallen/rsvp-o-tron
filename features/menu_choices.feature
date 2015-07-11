@@ -23,7 +23,7 @@ Scenario: Guest wants turkey
 Scenario: Guest wants vegetarian
     Given I am invited to the wedding
     When I have responded that I will attend, undecided on bells
-    And I choose vegetarian for my menu choice
+    And I choose tarte tatin for my menu choice
     Then my RSVP has the menu choice vegetarian
 
 Scenario: Guest not attending

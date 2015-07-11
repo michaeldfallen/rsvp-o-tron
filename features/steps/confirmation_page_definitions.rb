@@ -11,8 +11,8 @@ Given(/^I have already responded$/) do
 end
 
 When(/^I enter my RSVP code$/) do
-  visit("#{$URL}/rsvp")
-  fill_in('token', :with => "#{@invite_id}")
+  visit("#{Rsvpotron.url}/")
+  fill_in('token', with: "#{@invite_id}")
   click_button('Continue')
 end
 
@@ -25,5 +25,5 @@ When(/^I am taken to the confirmation page$/) do
 end
 
 Then(/^my answers are displayed$/) do
-  assert(page.has_content?("The Turkey and Ham"))
+  assert(page.has_content?('Stuffed turkey and ham'))
 end
