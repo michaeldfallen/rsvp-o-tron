@@ -5,6 +5,7 @@ psycopg2
 Flask-SQLAlchemy
 Flask-Migrate
 Flask-WTF
+Flask-HTTPAuth
 pytest
 colour-runner
 lxml
