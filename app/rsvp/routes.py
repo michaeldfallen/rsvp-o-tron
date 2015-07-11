@@ -35,7 +35,7 @@ def register_routes(blueprint):
         form = FindInviteForm()
         return views.Step1Start(form).render()
 
-    @blueprint.route('/rsvp', methods=['POST'])
+    @blueprint.route('/', methods=['POST'])
     def find_invite():
         form = FindInviteForm()
         invite = Invite.get(form.token.data)

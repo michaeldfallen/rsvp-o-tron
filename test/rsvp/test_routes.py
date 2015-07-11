@@ -29,13 +29,13 @@ class TestRoutes(unittest.TestCase):
     @with_context
     @with_client
     def test_start_route(self, client):
-        res = client.get('/rsvp')
+        res = client.get('/')
         self.assertEqual(res.status_code, 200)
 
     @with_context
     @with_client
     def test_find_invite_fail(self, client):
-        res = client.post('/rsvp', data={'token': 'shouldfail'})
+        res = client.post('/', data={'token': 'shouldfail'})
         html = document_fromstring(res.get_data())
         self.assertEqual(res.status_code, 200)
         self.assertIn(
@@ -47,7 +47,7 @@ class TestRoutes(unittest.TestCase):
     @with_client
     def test_find_invite_found(self, client):
         (invite, guest) = self.make_guest()
-        res = client.post('/rsvp', data={'token': invite.token})
+        res = client.post('/', data={'token': invite.token})
         self.assertEqual(res.status_code, 302)
         self.assertTrue(
             res.location.endswith('/rsvp/'+invite.token+'/invite-details')
@@ -96,8 +96,8 @@ class TestRoutes(unittest.TestCase):
         html = document_fromstring(res.get_data())
         self.assertEqual(res.status_code, 200)
         self.assertIn(
-            "{} {}".format(guest.first_name, guest.last_name),
-            html.xpath("//h1/text()")[0]
+            guest.first_name,
+            html.xpath("//h2[@class='guests']/text()")[0]
         )
 
         with client.session_transaction() as sesh:
@@ -139,8 +139,8 @@ class TestRoutes(unittest.TestCase):
         html = document_fromstring(res.get_data())
         self.assertEqual(res.status_code, 200)
         self.assertIn(
-            "{} {}".format(guest.first_name, guest.last_name),
-            html.xpath("//h1/text()")[0]
+            guest.first_name,
+            html.xpath("//h2[@class='guests']/text()")[0]
         )
 
         with client.session_transaction() as sesh:
@@ -180,8 +180,8 @@ class TestRoutes(unittest.TestCase):
         html = document_fromstring(res.get_data())
         self.assertEqual(res.status_code, 200)
         self.assertIn(
-            "{} {}".format(guest.first_name, guest.last_name),
-            html.xpath("//h1/text()")[0]
+            guest.first_name,
+            html.xpath("//h2[@class='guests']/text()")[0]
         )
 
         with client.session_transaction() as sesh:

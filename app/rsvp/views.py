@@ -110,11 +110,11 @@ class FinishedStep(Template):
             names = list(map(guest_name, guests))
             return concat_and_at_end(names) + " " + family_name
 
-        guests = list(map(lambda x: x.guest, self.rsvps))
+        filtered_rsvps = filter(pred, self.rsvps)
 
-        filtered = filter(pred, guests)
+        guests = list(map(lambda x: x.guest, filtered_rsvps))
 
-        sorted_names = sorted(filtered, key=last_name)
+        sorted_names = sorted(guests, key=last_name)
 
         families = groupby(sorted_names, last_name)
         guest_names = list(map(lambda x: concat_family(*x), families))
@@ -122,10 +122,10 @@ class FinishedStep(Template):
         return concat_and_at_end(guest_names)
 
     def guest_names_avoiding(self):
-        return self.guest_list(lambda o: not o.rsvp.attending)
+        return self.guest_list(lambda rsvp: not rsvp.attending)
 
     def guest_names_attending(self):
-        return self.guest_list(lambda o: o.rsvp.attending)
+        return self.guest_list(lambda rsvp: rsvp.attending)
 
     def people_attending(self):
         def are_attending(o):

@@ -75,10 +75,14 @@ class TestViews(unittest.TestCase):
         self.assertTrue(view.are_people_attending())
 
         html = document_fromstring(view.render())
-        self.assertIn('Joe',
-                      html.xpath('//div[@class="attending"]//li/text()'))
-        self.assertIn('Jane',
-                      html.xpath('//div[@class="avoiding"]//li/text()'))
+        self.assertIn(
+            'Joe',
+            html.xpath('//span[contains(@class, "attending")]/text()')[0]
+        )
+        self.assertIn(
+            'Jane',
+            html.xpath('//span[contains(@class, "avoiding")]/text()')[0]
+        )
 
         jane_rsvp.attending = False
         joe_rsvp.attending = False
@@ -121,15 +125,15 @@ class TestViews(unittest.TestCase):
         expected = [
             {
                 "name": "John",
-                "choice": "Turkey and Ham"
+                "choice": "Stuffed turkey and ham"
             },
             {
                 "name": "Paul",
-                "choice": "vegetarian tarte tatin"
+                "choice": "Vegetable tarte tatin"
             },
             {
                 "name": "Ringo",
-                "choice": "Roast sirloin of Beef"
+                "choice": "Roast sirloin of beef"
             }
         ]
         self.assertEqual(expected, FinishedStep(rsvps).menu_choices())
