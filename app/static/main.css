@@ -231,3 +231,7 @@ label.radio-label .iradio_square-pink {
 form p {
   margin-top: 20px;
 }
+
+form.inline-form {
+  display: inline-block;
+}

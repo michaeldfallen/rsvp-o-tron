@@ -1,22 +1,33 @@
 <h1>Add a Guest</h1>
 
-<form action="/invite/{{token}}/guest" method="post" accept-charset="utf-8">
+<form action="/invite/{{token}}/guest"
+      method="post"
+      accept-charset="utf-8"
+      class="form ">
   <label for="first_name">
     First Name
-    <input type="text" name="first_name" id="first_name" value="" />
   </label>
+  <input type="text"
+         name="first_name"
+         id="first_name"
+         class="form-control"
+         value="" />
 
   <label for="last_name">
     Last Name
-    <input type="text" name="last_name" id="last_name" value="" />
   </label>
+  <input type="text"
+         name="last_name"
+         id="last_name"
+         class="form-control"
+         value="" />
 
-  <label for="is_child">
+  <label for="is_child" class="radio-label">
     <input type="checkbox" name="is_child" id="is_child" />
     Child
   </label>
 
-  <label for="is_secondary">
+  <label for="is_secondary" class="radio-label">
     <input type="checkbox" name="is_secondary" id="is_secondary" />
     Secondary on Invite
   </label>

@@ -3,7 +3,7 @@
     <h2>All Invites</h2>
   </div>
 </div>
-<div class="row control-row">
+<div class="row ">
   <div class="col-sm-6 ">
     <a href="/invite/new" class="button btn-xs">Create new invite</a>
   </div>
@@ -12,22 +12,20 @@
 {{#invites}}
 <div class="strike control-row"></div>
 <div class="row">
-  <div class="col-sm-3">
+  <div class="col-sm-3 col-xs-4">
     <b>Token</b><br />
     <span class="token">{{token}}</span>
   </div>
-  <div class="col-sm-3">
+  <div class="col-sm-3 col-xs-6">
     <b>Room Held</b><br />
     {{#has_room}}Yes{{/has_room}}
     {{^has_room}}No{{/has_room}}
   </div>
-  <div class="col-sm-3 text-right">
-    <form method="GET" action="/invite/{{token}}/guest/new">
+  <div class="col-xs-12 col-sm-6 text-right">
+    <form method="GET" action="/invite/{{token}}/guest/new" class="inline-form">
       <input type="submit" value="Add Guest" class="btn-xs" />
     </form>
-  </div>
-  <div class="col-sm-3 text-right">
-    <form method="POST" action="/invite/{{token}}/delete">
+    <form method="POST" action="/invite/{{token}}/delete" class="inline-form">
       <input type="submit" value="Delete Invite" class="btn-xs"/>
     </form>
   </div>
