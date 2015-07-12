@@ -15,7 +15,7 @@ class Invite(db.Model):
         backref='invite_guests')
 
     def __new_uuid(self):
-        return uuid.uuid4().hex[:6]
+        return str(uuid.uuid4().hex[:6]).lower()
 
     def __init__(self, has_room=False, token=None):
         self.has_room = has_room
@@ -45,7 +45,7 @@ class Invite(db.Model):
         return Invite.query.all()
 
     def get(token):
-        invite = Invite.query.filter_by(token=token).first()
+        invite = Invite.query.filter_by(token=str(token).lower()).first()
         return invite
 
     def save(self):
