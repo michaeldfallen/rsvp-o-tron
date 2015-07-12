@@ -14,7 +14,10 @@ class CreateInvite(Template, FormHandler):
 class ListInvites(Template):
 
     def __init__(self, invites=[]):
-        self.invites = invites
+        def by_id(invite):
+            return invite.id
+
+        self.invites = sorted(list(invites), key=by_id, reverse=True)
 
     def title(self):
         return "All Invites"
