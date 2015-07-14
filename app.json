@@ -22,14 +22,10 @@
     },
     "DATABASE_URL":{
       "required":true
-    }
+    },
+    "BUILDPACK_URL": "https://github.com/heroku/heroku-buildpack-python"
   },
   "addons":[
     "heroku-postgresql"
-  ],
-  "buildpacks":[
-    {
-      "url": "https://github.com/heroku/heroku-buildpack-python"
-    }
   ]
 }
