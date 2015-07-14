@@ -10,3 +10,4 @@ pytest
 colour-runner
 lxml
 jsonpickle
+newrelic
