@@ -4,7 +4,26 @@
   "env":{
     "SECRET_KEY":{
       "required":true
-    }
+    },
+    "NEW_RELIC_LICENSE_KEY":{
+      "required":true
+    },
+    "NEW_RELIC_LOG":{
+      "required":true
+    },
+    "password":{
+      "required":true
+    },
+    "username":{
+      "required":true
+    },
+    "HEROKU_POSTGRESQL_AQUA_URL":{
+      "required":true
+    },
+    "DATABASE_URL":{
+      "required":true
+    },
+    "BUILDPACK_URL": "https://github.com/heroku/heroku-buildpack-python"
   },
   "addons":[
     "heroku-postgresql"

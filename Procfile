@@ -1,1 +1,1 @@
-web: ./bin/web.sh
+web: newrelic-admin run-program ./bin/web.sh
