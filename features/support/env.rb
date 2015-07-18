@@ -1,6 +1,6 @@
 # Urls for accessing RSVPOTRON
 class Rsvpotron
   def self.url
-    ENV['RSVPOTRON_URL'] || 'http://localhost:5000'
+    ENV['RSVPOTRON_URL'] || 'http://test:test@localhost:5000'
   end
 end

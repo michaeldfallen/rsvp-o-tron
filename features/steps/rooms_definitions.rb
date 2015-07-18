@@ -13,7 +13,7 @@ end
 Given(/^I have a room held for me on my invite$/) do
   visit("#{Rsvpotron.url}/invite")
   click_on('Create new invite')
-  find('label', text: 'Room held').toggle('click')
+  find('label', text: 'Room held').trigger('click')
   click_button('Continue')
   click_button('Add Guest')
   fill_in('First Name', with: 'John')

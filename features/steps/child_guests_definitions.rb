@@ -11,7 +11,7 @@ When(/^I add a child guest to that invite$/) do
   click_button('Add Guest')
   fill_in('First Name', with: 'John')
   fill_in('Last Name', with: 'Smith')
-  check('Child')
+  find('label', text: 'Child').trigger('click')
   click_button('Continue')
 end
 
